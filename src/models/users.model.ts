@@ -1,40 +1,50 @@
 // See http://docs.sequelizejs.com/en/latest/docs/models-definition/
 // for more of what you can do here.
-import { Sequelize, DataTypes } from 'sequelize';
-import { Application } from '../declarations';
+import { Sequelize, DataTypes, Model } from "sequelize";
+import { ModelName, ServiceName, ModelType } from "../declarations";
+import { Application } from "../declarations";
 
-export default function (app: Application) {
-  const sequelizeClient: Sequelize = app.get('sequelizeClient');
-  const users = sequelizeClient.define('users', {
-  
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
+export class UserModel extends Model {
+  public email!: string;
+  public username!: string;
+  public alterEgo!: string;
+
+  public password!: string;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+export default function(app: Application): typeof UserModel {
+  const sequelize: Sequelize = app.get(ServiceName.SEQUELIZE);
+  UserModel.init(
+    {
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
     },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-  
-  
-    googleId: { type: DataTypes.STRING },
-  
-    facebookId: { type: DataTypes.STRING },
-  
-  }, {
-    hooks: {
-      beforeCount(options: any) {
-        options.raw = true;
+    {
+      sequelize,
+      tableName: ModelName.USERS,
+      hooks: {
+        beforeCount(options: any) {
+          options.raw = true;
+        }
       }
     }
-  });
+  );
 
   // eslint-disable-next-line no-unused-vars
-  (users as any).associate = function (models: any) {
+  UserModel.associate = function(models) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
+    // And http://sequelize.org/master/manual/typescript.html
   };
 
-  return users;
+  return UserModel;
 }
