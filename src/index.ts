@@ -1,7 +1,8 @@
 import logger from "./logger";
 import app from "./app";
+import { SettingName } from "./declarations";
 
-const port = app.get("port");
+const port = app.get(SettingName.PORT);
 const server = app.listen(port);
 
 process.on("unhandledRejection", (reason, p) =>
@@ -11,7 +12,7 @@ process.on("unhandledRejection", (reason, p) =>
 server.on("listening", () =>
   logger.info(
     "Feathers application started on http://%s:%d",
-    app.get("host"),
+    app.get(SettingName.HOST),
     port
   )
 );

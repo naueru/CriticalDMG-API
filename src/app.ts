@@ -9,7 +9,7 @@ import configuration from "@feathersjs/configuration";
 import express from "@feathersjs/express";
 import socketio from "@feathersjs/socketio";
 
-import { Application } from "./declarations";
+import { Application, SettingName } from "./declarations";
 import logger from "./logger";
 import middleware from "./middleware";
 import services from "./services";
@@ -29,9 +29,9 @@ app.use(cors());
 app.use(compress());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(favicon(path.join(app.get("public"), "favicon.ico")));
+app.use(favicon(path.join(app.get(SettingName.PUBLIC_PATH), "favicon.ico")));
 // Host the public folder
-app.use("/", express.static(app.get("public")));
+app.use("/", express.static(app.get(SettingName.PUBLIC_PATH)));
 
 // Set up Plugins and providers
 app.configure(express.rest());

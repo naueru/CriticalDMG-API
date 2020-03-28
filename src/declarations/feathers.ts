@@ -7,7 +7,10 @@ export enum SettingName {
   SEQUELIZE = "sequelizeClient",
   POSTGRES = "postgres",
   SEQUELIZE_SYNC = "sequelizeSync",
-  PAGINATE = "paginate"
+  PAGINATE = "paginate",
+  PUBLIC_PATH = "public",
+  PORT = "port",
+  HOST = "host"
 }
 
 export enum ServiceName {
@@ -34,6 +37,21 @@ export interface SettingTypes {
    * Sequelize.sync promise result
    */
   [SettingName.PAGINATE]: Pagination;
+
+  /**
+   * Path where the public assets will reside
+   */
+  [SettingName.PUBLIC_PATH]: string;
+
+  /**
+   * Path where the public assets will reside
+   */
+  [SettingName.PORT]: string;
+
+  /**
+   * Path where the public assets will reside
+   */
+  [SettingName.HOST]: string;
 }
 export interface ServiceTypes {
   [ServiceName.USERS]: Users & ServiceAddons<any>;
