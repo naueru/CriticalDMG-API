@@ -2,6 +2,7 @@ import { CriticalDMGSequelize } from "./sequelize";
 import { ServiceAddons } from "@feathersjs/feathers";
 import { Application as ExpressFeathers } from "@feathersjs/express";
 import { Users } from "../services/users/users.class";
+import { AuthenticationService } from "@feathersjs/authentication/lib";
 
 export enum SettingName {
   SEQUELIZE = "sequelizeClient",
@@ -14,7 +15,8 @@ export enum SettingName {
 }
 
 export enum ServiceName {
-  USERS = "users"
+  USERS = "users",
+  AUTHENTICATION = "authentication"
 }
 
 export interface SettingTypes {
@@ -56,6 +58,8 @@ export interface SettingTypes {
 
 export interface ServiceTypes {
   [ServiceName.USERS]: Users & ServiceAddons<any>;
+
+  [ServiceName.AUTHENTICATION]: AuthenticationService & ServiceAddons<any>;
 }
 
 export type Pagination = void | { default: number; max: number };
