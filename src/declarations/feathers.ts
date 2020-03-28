@@ -44,15 +44,16 @@ export interface SettingTypes {
   [SettingName.PUBLIC_PATH]: string;
 
   /**
-   * Path where the public assets will reside
+   * Application port where it'll listen
    */
   [SettingName.PORT]: string;
 
   /**
-   * Path where the public assets will reside
+   * Host
    */
   [SettingName.HOST]: string;
 }
+
 export interface ServiceTypes {
   [ServiceName.USERS]: Users & ServiceAddons<any>;
 }

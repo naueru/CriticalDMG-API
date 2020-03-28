@@ -8,25 +8,23 @@ export enum ModelName {
   USERS = "users"
 }
 
+export type Models = {
+  [ModelName.USERS]: ModelCtor<UserModel>;
+};
+
 /**
  * Module augmentation to merge declarations
  */
 declare module "sequelize/types" {
   abstract class Model {
-    static associate?: (a: Models) => void;
+    static associate?: (models: Models) => void;
   }
 }
 export class CriticalDMGSequelize extends Sequelize {
   /**
    * Dictionary of all models linked with this instance.
    */
-  readonly models!: {
-    [ModelName.USERS]: ModelCtor<UserModel>;
-  };
+  readonly models!: Models;
 }
-
-export type Models = {
-  [N in ModelName]: ModelCtor<Model>;
-};
 
 export type ModelType = typeof Model;

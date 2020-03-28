@@ -1,6 +1,6 @@
 // See http://docs.sequelizejs.com/en/latest/docs/models-definition/
 // for more of what you can do here.
-import { Sequelize, DataTypes, Model } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { ModelName, SettingName } from "../declarations";
 import { Application } from "../declarations";
 
@@ -15,13 +15,22 @@ export class UserModel extends Model {
 }
 
 export default function(app: Application): typeof UserModel {
-  const sequelize: Sequelize = app.get(SettingName.SEQUELIZE);
+  const sequelize = app.get(SettingName.SEQUELIZE);
   UserModel.init(
     {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      },
+      alterEgo: {
+        type: DataTypes.STRING,
+        allowNull: false
       },
       password: {
         type: DataTypes.STRING,
