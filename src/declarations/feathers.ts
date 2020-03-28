@@ -1,29 +1,52 @@
 import { CriticalDMGSequelize } from "./sequelize";
+import { ServiceAddons } from "@feathersjs/feathers";
 import { Application as ExpressFeathers } from "@feathersjs/express";
-import { Sequelize, Model } from "sequelize/types";
+import { Users } from "../services/users/users.class";
 
-// A mapping of service names to types. Will be extended in service files.
-export enum ServiceName {
+export enum SettingName {
   SEQUELIZE = "sequelizeClient",
   POSTGRES = "postgres",
-  SEQUELIZE_SYNC = "sequelizeSync"
+  SEQUELIZE_SYNC = "sequelizeSync",
+  PAGINATE = "paginate"
 }
 
-export interface ServiceTypes {
+export enum ServiceName {
+  USERS = "users"
+}
+
+export interface SettingTypes {
   /**
    * Sequelize instance wrapper with specific Critical DMG logic
    */
-  [ServiceName.SEQUELIZE]: CriticalDMGSequelize;
+  [SettingName.SEQUELIZE]: CriticalDMGSequelize;
 
   /**
    * Postgres connection url
    */
-  [ServiceName.POSTGRES]: string;
+  [SettingName.POSTGRES]: string;
 
   /**
    * Sequelize.sync promise result
    */
-  [ServiceName.SEQUELIZE_SYNC]: Promise<CriticalDMGSequelize>;
+  [SettingName.SEQUELIZE_SYNC]: Promise<CriticalDMGSequelize>;
+
+  /**
+   * Sequelize.sync promise result
+   */
+  [SettingName.PAGINATE]: Pagination;
 }
+export interface ServiceTypes {
+  [ServiceName.USERS]: Users & ServiceAddons<any>;
+}
+
+export type Pagination = void | { default: number; max: number };
+
+interface CriticalDMGApplication {
+  get<T extends keyof SettingTypes>(name: T): SettingTypes[T];
+
+  set<T extends keyof SettingTypes>(name: T, value: SettingTypes[T]): this;
+}
+
 // The application instance type that will be used everywhere else
-export type Application = ExpressFeathers<ServiceTypes>;
+export type Application = Omit<ExpressFeathers<ServiceTypes>, "get" | "set"> &
+  CriticalDMGApplication;

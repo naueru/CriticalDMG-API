@@ -1,7 +1,7 @@
-import { Application, ServiceName, CriticalDMGSequelize } from "./declarations";
+import { Application, CriticalDMGSequelize, SettingName } from "./declarations";
 
 export default function(app: Application) {
-  const connectionString = app.get(ServiceName.POSTGRES);
+  const connectionString = app.get(SettingName.POSTGRES);
   const sequelize = new CriticalDMGSequelize(connectionString, {
     dialect: "postgres",
     logging: false,
@@ -10,7 +10,7 @@ export default function(app: Application) {
     }
   });
   const oldSetup = app.setup;
-  app.set(ServiceName.SEQUELIZE, sequelize);
+  app.set(SettingName.SEQUELIZE, sequelize);
 
   app.setup = function(...args) {
     const result = oldSetup.apply(this, args);
@@ -24,7 +24,7 @@ export default function(app: Application) {
     });
 
     // Sync to the database
-    app.set(ServiceName.SEQUELIZE_SYNC, sequelize.sync());
+    app.set(SettingName.SEQUELIZE_SYNC, sequelize.sync());
 
     return result;
   };

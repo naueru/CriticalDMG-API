@@ -1,7 +1,7 @@
 // See http://docs.sequelizejs.com/en/latest/docs/models-definition/
 // for more of what you can do here.
 import { Sequelize, DataTypes, Model } from "sequelize";
-import { ModelName, ServiceName, ModelType } from "../declarations";
+import { ModelName, SettingName } from "../declarations";
 import { Application } from "../declarations";
 
 export class UserModel extends Model {
@@ -15,7 +15,7 @@ export class UserModel extends Model {
 }
 
 export default function(app: Application): typeof UserModel {
-  const sequelize: Sequelize = app.get(ServiceName.SEQUELIZE);
+  const sequelize: Sequelize = app.get(SettingName.SEQUELIZE);
   UserModel.init(
     {
       email: {
