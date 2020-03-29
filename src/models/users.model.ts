@@ -39,7 +39,7 @@ export default function(app: Application): typeof UserModel {
     },
     {
       sequelize,
-      tableName: ModelName.USERS,
+      tableName: ModelName.USER,
       hooks: {
         beforeCount(options: any) {
           options.raw = true;

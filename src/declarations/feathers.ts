@@ -6,7 +6,7 @@ import { AuthenticationService } from "@feathersjs/authentication/lib";
 
 export enum SettingName {
   SEQUELIZE = "sequelizeClient",
-  POSTGRES = "postgres",
+  DATABASE_CONFIGURATION = "DATABASE_CONFIGURATION",
   SEQUELIZE_SYNC = "sequelizeSync",
   PAGINATE = "paginate",
   PUBLIC_PATH = "public",
@@ -19,6 +19,15 @@ export enum ServiceName {
   AUTHENTICATION = "authentication"
 }
 
+export interface DatabaseConfiguration {
+  NAME: string;
+  USERNAME: string;
+  PASSWORD: string;
+  HOST: string;
+  PORT: number;
+  DIALECT: "mysql" | "postgres" | "sqlite" | "mariadb" | "mssql";
+}
+
 export interface SettingTypes {
   /**
    * Sequelize instance wrapper with specific Critical DMG logic
@@ -26,9 +35,9 @@ export interface SettingTypes {
   [SettingName.SEQUELIZE]: CriticalDMGSequelize;
 
   /**
-   * Postgres connection url
+   * Postgres configuration data
    */
-  [SettingName.POSTGRES]: string;
+  [SettingName.DATABASE_CONFIGURATION]: DatabaseConfiguration;
 
   /**
    * Sequelize.sync promise result

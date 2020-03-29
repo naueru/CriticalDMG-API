@@ -44,5 +44,12 @@
       }
     }
   },
-  "postgres": "postgres://postgres:@localhost:5432/critical_dmg_api"
+  "DATABASE_CONFIGURATION": {
+    "NAME": "critical_dmg",
+    "USERNAME": "critical_dmg",
+    "PASSWORD": "critical_dmg",
+    "HOST": "localhost",
+    "PORT": 5432,
+    "DIALECT": "postgres"
+  }
 }

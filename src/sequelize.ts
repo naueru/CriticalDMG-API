@@ -1,14 +1,19 @@
 import { Application, CriticalDMGSequelize, SettingName } from "./declarations";
 
 export default function(app: Application) {
-  const connectionString = app.get(SettingName.POSTGRES);
-  const sequelize = new CriticalDMGSequelize(connectionString, {
-    dialect: "postgres",
-    logging: false,
-    define: {
-      freezeTableName: true
+  const DATABASE_CONFIGURATION = app.get(SettingName.DATABASE_CONFIGURATION);
+  const sequelize = new CriticalDMGSequelize(
+    DATABASE_CONFIGURATION.NAME,
+    DATABASE_CONFIGURATION.USERNAME,
+    DATABASE_CONFIGURATION.PASSWORD,
+    {
+      dialect: DATABASE_CONFIGURATION.DIALECT,
+      logging: false,
+      define: {
+        freezeTableName: true
+      }
     }
-  });
+  );
   const oldSetup = app.setup;
   app.set(SettingName.SEQUELIZE, sequelize);
 
