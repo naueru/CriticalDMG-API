@@ -1,10 +1,14 @@
 // See http://docs.sequelizejs.com/en/latest/docs/models-definition/
 // for more of what you can do here.
 import { DataTypes, Model } from "sequelize";
-import { ModelName, SettingName } from "../declarations";
-import { Application } from "../declarations";
+import {
+  ModelName,
+  SettingName,
+  CriticalDMGModel,
+  Application,
+} from "../declarations";
 
-export class UserModel extends Model {
+export class UserModel extends CriticalDMGModel {
   public email!: string;
   public username!: string;
   public alterEgo!: string;
@@ -14,28 +18,28 @@ export class UserModel extends Model {
   public readonly updatedAt!: Date;
 }
 
-export default function(app: Application): typeof UserModel {
+export default function (app: Application): typeof UserModel {
   const sequelize = app.get(SettingName.SEQUELIZE);
   UserModel.init(
     {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       alterEgo: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     },
     {
       sequelize,
@@ -43,16 +47,14 @@ export default function(app: Application): typeof UserModel {
       hooks: {
         beforeCount(options: any) {
           options.raw = true;
-        }
-      }
+        },
+      },
     }
   );
 
   // eslint-disable-next-line no-unused-vars
-  UserModel.associate = function(models) {
+  UserModel.associate = function (models) {
     // Define associations here
-    // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    // And http://sequelize.org/master/manual/typescript.html
   };
 
   return UserModel;
