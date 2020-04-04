@@ -5,7 +5,7 @@ import { UserModel } from "../models/users.model";
  * Model names available on sequelize
  */
 export enum ModelName {
-  USER = "user"
+  USER = "user",
 }
 
 export type Models = {
