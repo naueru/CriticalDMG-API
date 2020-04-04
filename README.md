@@ -1,6 +1,6 @@
 # critical-dmg-api
 
-> 
+>
 
 ## About
 
@@ -8,21 +8,26 @@ This project uses [Feathers](http://feathersjs.com). An open source web framewor
 
 ## Getting Started
 
-Getting up and running is as easy as 1, 2, 3.
+1. Make sure you have [NodeJS](https://nodejs.org/), [npm](https://www.npmjs.com/) and [PostgreSQL](https://www.postgresql.org/) installed.
 
-1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
 2. Install your dependencies
 
-    ```
-    cd path/to/critical-dmg-api
-    npm install
-    ```
+   ```bash
+   cd path/to/CriticalDMG-API
+   npm install
+   ```
 
-3. Start your app
+3. [Configure PostgreSQL.](https://www.postgresql.org/docs/12/runtime.html)
+   **For local development:**
 
-    ```
-    npm start
-    ```
+   - [Create an user](https://www.postgresql.org/docs/12/app-createuser.html) with username _"critical-dmg"_ and password _"critical-dmg"_
+   - [Create a database](https://www.postgresql.org/docs/12/app-createdb.html) called _"critical-dmg"_ and set as owner the user created
+
+4. Start your app
+
+   ```bash
+   npm start
+   ```
 
 ## Testing
 
@@ -32,12 +37,11 @@ Simply run `npm test` and all your tests in the `test/` directory will be run.
 
 Feathers has a powerful command line interface. Here are a few things it can do:
 
-```
-$ npm install -g @feathersjs/cli          # Install Feathers CLI
-
-$ feathers generate service               # Generate a new Service
-$ feathers generate hook                  # Generate a new Hook
-$ feathers help                           # Show all commands
+```bash
+npm install -g @feathersjs/cli          # Install Feathers CL
+feathers generate service               # Generate a new Service
+feathers generate hook                  # Generate a new Hook
+feathers help                           # Show all commands
 ```
 
 ## Help
