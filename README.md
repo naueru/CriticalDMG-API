@@ -1,2 +1,49 @@
-# CriticalDMG-API
-Open source API for CriticalDMG project
+# critical-dmg-api
+
+>
+
+## About
+
+This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
+
+## Getting Started
+
+1. Make sure you have [NodeJS](https://nodejs.org/), [npm](https://www.npmjs.com/) and [PostgreSQL](https://www.postgresql.org/) installed.
+
+2. Install your dependencies
+
+   ```bash
+   cd path/to/CriticalDMG-API
+   npm install
+   ```
+
+3. [Configure PostgreSQL.](https://www.postgresql.org/docs/12/runtime.html)
+   **For local development:**
+
+   - [Create an user](https://www.postgresql.org/docs/12/app-createuser.html) with username _"critical-dmg"_ and password _"critical-dmg"_
+   - [Create a database](https://www.postgresql.org/docs/12/app-createdb.html) called _"critical-dmg"_ and set as owner the user created
+
+4. Start your app
+
+   ```bash
+   npm dev
+   ```
+
+## Testing
+
+Simply run `npm test` and all your tests in the `test/` directory will be run.
+
+## Scaffolding
+
+Feathers has a powerful command line interface. Here are a few things it can do:
+
+```bash
+npm install -g @feathersjs/cli          # Install Feathers CL
+feathers generate service               # Generate a new Service
+feathers generate hook                  # Generate a new Hook
+feathers help                           # Show all commands
+```
+
+## Help
+
+For more information on all the things you can do with Feathers visit [docs.feathersjs.com](http://docs.feathersjs.com).
