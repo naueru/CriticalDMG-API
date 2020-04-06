@@ -1,6 +1,4 @@
-// See http://docs.sequelizejs.com/en/latest/docs/models-definition/
-// for more of what you can do here.
-import { DataTypes, Model } from "sequelize";
+import { DataTypes } from "sequelize";
 import {
   ModelName,
   SettingName,
@@ -44,6 +42,7 @@ export default function (app: Application): typeof UserModel {
     {
       sequelize,
       tableName: ModelName.USER,
+      modelName: ModelName.USER,
       hooks: {
         beforeCount(options: any) {
           options.raw = true;
@@ -52,9 +51,10 @@ export default function (app: Application): typeof UserModel {
     }
   );
 
-  // eslint-disable-next-line no-unused-vars
   UserModel.associate = function (models) {
-    // Define associations here
+    this.belongsToMany(models[ModelName.ROOM], {
+      through: ModelName.USER_ROOM,
+    });
   };
 
   return UserModel;

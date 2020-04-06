@@ -1,11 +1,16 @@
 import { Model, Sequelize } from "sequelize";
 import { UserModel } from "../models/users.model";
+import { RoomModel } from "../models/room.model";
+import { RoomLogModel } from "../models/roomLog.model";
 
 /**
  * Model names available on sequelize
  */
 export enum ModelName {
   USER = "user",
+  ROOM = "room",
+  ROOM_LOG = "room_log",
+  USER_ROOM = "user_room",
 }
 
 /**
@@ -14,6 +19,8 @@ export enum ModelName {
  */
 export type Models = {
   [ModelName.USER]: ModelCtor<UserModel>;
+  [ModelName.ROOM]: ModelCtor<RoomModel>;
+  [ModelName.ROOM_LOG]: ModelCtor<RoomLogModel>;
 };
 
 /**
