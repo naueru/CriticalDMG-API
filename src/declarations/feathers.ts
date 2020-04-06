@@ -3,6 +3,7 @@ import { ServiceAddons } from "@feathersjs/feathers";
 import { Application as ExpressFeathers } from "@feathersjs/express";
 import { Users } from "../services/users/users.class";
 import { AuthenticationService } from "@feathersjs/authentication/lib";
+import { Rooms } from "../services/rooms/rooms.class";
 
 export enum SettingName {
   SEQUELIZE = "sequelizeClient",
@@ -11,12 +12,13 @@ export enum SettingName {
   PAGINATE = "paginate",
   PUBLIC_PATH = "public",
   PORT = "port",
-  HOST = "host"
+  HOST = "host",
 }
 
 export enum ServiceName {
   USERS = "users",
-  AUTHENTICATION = "authentication"
+  AUTHENTICATION = "authentication",
+  ROOMS = "rooms",
 }
 
 export interface DatabaseConfiguration {
@@ -67,6 +69,8 @@ export interface SettingTypes {
 
 export interface ServiceTypes {
   [ServiceName.USERS]: Users & ServiceAddons<any>;
+
+  [ServiceName.ROOMS]: Rooms & ServiceAddons<any>;
 
   [ServiceName.AUTHENTICATION]: AuthenticationService & ServiceAddons<any>;
 }
