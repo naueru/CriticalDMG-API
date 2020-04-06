@@ -30,7 +30,7 @@
     "start": "node lib/",
     "jest": "jest  --forceExit",
     "compile": "rm -rf lib/ && tsc",
-    "build": "npm run compile"
+    "build": "yarn run compile"
   },
   "standard": {
     "env": [
