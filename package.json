@@ -1,8 +1,8 @@
 {
   "name": "critical-dmg-api",
   "description": "",
-  "version": "0.0.0",
-  "homepage": "",
+  "version": "0.1.0",
+  "homepage": "https://criticaldmg-api.com/",
   "private": true,
   "main": "src",
   "keywords": [
@@ -20,8 +20,9 @@
     "config": "config/"
   },
   "engines": {
-    "node": "^12.0.0",
-    "yarn": ">= 0.18.0"
+    "node": "12.16.1",
+    "yarn": "1.22.4",
+    "npm": "6.13.4"
   },
   "scripts": {
     "test": "yarn run compile && yarn run jest",
