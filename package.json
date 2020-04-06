@@ -27,9 +27,10 @@
   "scripts": {
     "test": "yarn run compile && yarn run jest",
     "dev": "ts-node-dev --no-notify src/",
-    "start": "yarn run compile && node lib/",
+    "start": "node lib/",
     "jest": "jest  --forceExit",
-    "compile": "rm -rf lib/ && tsc"
+    "compile": "rm -rf lib/ && tsc",
+    "build": "npm run compile"
   },
   "standard": {
     "env": [
