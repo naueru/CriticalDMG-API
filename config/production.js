@@ -1,5 +1,5 @@
 module.exports = {
-  host: process.env.SERVER_HOST || "https://criticaldmg-api.com/",
+  host: process.env.SERVER_HOST || "criticaldmg-api.com",
   port: process.env.SERVER_PORT || "3000",
 
   DATABASE_CONFIGURATION: {
