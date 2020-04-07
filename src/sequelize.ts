@@ -7,6 +7,8 @@ export default function (app: Application) {
     DATABASE_CONFIGURATION.USERNAME,
     DATABASE_CONFIGURATION.PASSWORD,
     {
+      host: DATABASE_CONFIGURATION.HOST,
+      port: DATABASE_CONFIGURATION.PORT,
       dialect: DATABASE_CONFIGURATION.DIALECT,
       logging: false,
       define: {
