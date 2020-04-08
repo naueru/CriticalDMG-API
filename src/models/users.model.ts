@@ -8,7 +8,7 @@ import {
 
 export class UserModel extends CriticalDMGModel {
   public email!: string;
-  public username!: string;
+  public userName!: string;
   public alterEgo!: string;
   public picture!: string;
   public icon!: string;
