@@ -8,8 +8,10 @@ import {
 
 export class UserModel extends CriticalDMGModel {
   public email!: string;
-  public username!: string;
+  public userName!: string;
   public alterEgo!: string;
+  public picture!: string;
+  public icon!: string;
 
   public password!: string;
   public readonly createdAt!: Date;
@@ -25,12 +27,20 @@ export default function (app: Application): typeof UserModel {
         allowNull: false,
         unique: true,
       },
-      username: {
+      userName: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
       },
       alterEgo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      picture: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      icon: {
         type: DataTypes.STRING,
         allowNull: false,
       },
