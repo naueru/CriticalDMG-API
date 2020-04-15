@@ -1,6 +1,9 @@
+import { authenticate } from "@feathersjs/authentication";
+// Don't remove this comment. It's needed to format import lines nicely.
+
 export default {
   before: {
-    all: [],
+    all: [authenticate("jwt")],
     find: [],
     get: [],
     create: [],

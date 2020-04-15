@@ -16,6 +16,7 @@ export default function (app: Application) {
       },
     }
   );
+
   const oldSetup = app.setup;
   app.set(SettingName.SEQUELIZE, sequelize);
 
