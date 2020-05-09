@@ -5,22 +5,14 @@ import {
   CriticalDMGModel,
   Application,
   LogType,
-  LogData,
   LogTypeEnum,
+  LogContent,
 } from "../declarations";
 import { RoomModel } from "./room.model";
 
 export class RoomLogModel extends CriticalDMGModel {
   public type!: LogType;
-  public jsonData!: string;
-
-  public get data(): LogData {
-    return JSON.parse(this.jsonData) as LogData;
-  }
-
-  public set data(value: LogData) {
-    this.setDataValue("jsonData", JSON.stringify(value));
-  }
+  public content!: LogContent;
 
   public static associations: {
     room: Association<RoomLogModel, RoomModel>;
@@ -39,7 +31,7 @@ export default function (app: Application): typeof RoomLogModel {
         allowNull: false,
       },
 
-      jsonData: {
+      content: {
         type: DataTypes.JSON,
       },
     },

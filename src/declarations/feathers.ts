@@ -1,9 +1,13 @@
 import { CriticalDMGSequelize } from "./sequelize";
 import { ServiceAddons } from "@feathersjs/feathers";
 import { Application as ExpressFeathers } from "@feathersjs/express";
-import { Users } from "../services/users/users.class";
+import { UsersService } from "../services/users/users.class";
 import { AuthenticationService } from "@feathersjs/authentication/lib";
-import { Rooms } from "../services/rooms/rooms.class";
+import { RoomsService } from "../services/rooms/rooms.class";
+import { RoomLogDto } from "../services/roomLogs/roomLogs.dto";
+import { UserDTO } from "../services/users/users.dto";
+import { RoomDTO } from "../services/rooms/rooms.dto";
+import { RealTimeConnection } from "@feathersjs/transport-commons/lib/channels/channel/base";
 
 export enum SettingName {
   SEQUELIZE = "sequelizeClient",
@@ -19,6 +23,8 @@ export enum ServiceName {
   USERS = "users",
   AUTHENTICATION = "authentication",
   ROOMS = "rooms",
+  ROOM_LOGS = "roomLogs",
+  ROOM_SUBSCRIPTIONS = "roomSubscriptions",
 }
 
 export interface DatabaseConfiguration {
@@ -68,21 +74,31 @@ export interface SettingTypes {
 }
 
 export interface ServiceTypes {
-  [ServiceName.USERS]: Users & ServiceAddons<any>;
+  [ServiceName.USERS]: UsersService & ServiceAddons<any>;
 
-  [ServiceName.ROOMS]: Rooms & ServiceAddons<any>;
+  [ServiceName.ROOMS]: RoomsService & ServiceAddons<RoomDTO>;
 
-  [ServiceName.AUTHENTICATION]: AuthenticationService & ServiceAddons<any>;
+  [ServiceName.ROOM_LOGS]: RoomsService & ServiceAddons<RoomLogDto>;
+
+  [ServiceName.ROOM_SUBSCRIPTIONS]: RoomsService & ServiceAddons<any>;
+
+  [ServiceName.AUTHENTICATION]: AuthenticationService &
+    ServiceAddons<RoomLogDto>;
 }
 
 export type Pagination = void | { default: number; max: number };
 
-interface CriticalDMGApplication {
-  get<T extends keyof SettingTypes>(name: T): SettingTypes[T];
+declare module "@feathersjs/feathers" {
+  export interface Application<ServiceTypes = {}> {
+    get<T extends keyof SettingTypes>(name: T): SettingTypes[T];
 
-  set<T extends keyof SettingTypes>(name: T, value: SettingTypes[T]): this;
+    set<T extends keyof SettingTypes>(name: T, value: SettingTypes[T]): this;
+  }
+
+  export interface Params {
+    user?: UserDTO;
+    connection?: RealTimeConnection;
+  }
 }
 
-// The application instance type that will be used everywhere else
-export type Application = Omit<ExpressFeathers<ServiceTypes>, "get" | "set"> &
-  CriticalDMGApplication;
+export type Application = ExpressFeathers<ServiceTypes>;

@@ -63,7 +63,7 @@ export default function (app: Application): typeof UserModel {
 
   UserModel.associate = function (models) {
     this.belongsToMany(models[ModelName.ROOM], {
-      through: ModelName.USER_ROOM,
+      through: ModelName.ROOM_SUBSCRIPTION,
     });
   };
 

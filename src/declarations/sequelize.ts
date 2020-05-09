@@ -10,7 +10,7 @@ export enum ModelName {
   USER = "user",
   ROOM = "room",
   ROOM_LOG = "room_log",
-  USER_ROOM = "user_room",
+  ROOM_SUBSCRIPTION = "room_subscription",
 }
 
 /**
