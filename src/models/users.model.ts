@@ -62,8 +62,8 @@ export default function (app: Application): typeof UserModel {
   );
 
   UserModel.associate = function (models) {
-    this.belongsToMany(models[ModelName.ROOM], {
-      through: ModelName.ROOM_SUBSCRIPTION,
+    this.belongsToMany(models[ModelName.SESSION], {
+      through: ModelName.SESSION_SUBSCRIPTION,
     });
   };
 

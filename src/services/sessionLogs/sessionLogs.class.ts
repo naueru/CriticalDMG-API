@@ -1,10 +1,10 @@
 import { Service, SequelizeServiceOptions } from "feathers-sequelize";
 import { Application } from "../../declarations";
-import { RoomLogModel } from "../../models/roomLog.model";
-import { RoomLogDto } from "./roomLogs.dto";
+import { SessionLogModel } from "../../models/sessionLogs.model";
+import { SessionLogDto } from "./sessionLogs.dto";
 
-export class RoomLogsService extends Service<RoomLogDto> {
-  Model!: RoomLogModel;
+export class SessionLogsService extends Service<SessionLogDto> {
+  Model!: SessionLogModel;
 
   constructor(options: Partial<SequelizeServiceOptions>, app: Application) {
     super(options);

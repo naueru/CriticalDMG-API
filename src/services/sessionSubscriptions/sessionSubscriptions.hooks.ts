@@ -1,9 +1,9 @@
 import { authenticate } from "@feathersjs/authentication";
 import { Hook, HooksObject } from "@feathersjs/feathers";
-import { RoomSubscriptionDto } from "./roomSubscriptionDto";
+import { SessionSubscriptionDto } from "./sessionSubscriptions.dto";
 // Don't remove this comment. It's needed to format import lines nicely.
 
-const setUserToSubscribe: Hook<RoomSubscriptionDto> = (context) => {
+const setUserToSubscribe: Hook<SessionSubscriptionDto> = (context) => {
   if (context.params.user && context.data) {
     context.data = {
       ...context.data,
@@ -12,28 +12,28 @@ const setUserToSubscribe: Hook<RoomSubscriptionDto> = (context) => {
   }
 };
 
-const mustBeBySocket: Hook<RoomSubscriptionDto> = (context) => {
+const mustBeBySocket: Hook<SessionSubscriptionDto> = (context) => {
   if (context.params.provider !== "socketio") {
     throw new Error("Service must be called via socket");
   }
 };
 
-const joinRoomChannel: Hook<RoomSubscriptionDto> = (context) => {
+const joinSessionChannel: Hook<SessionSubscriptionDto> = (context) => {
   if (context.params.connection) {
     context.app
-      .channel(`room/${context.data?.roomId}`)
+      .channel(`session/${context.data?.sessionId}`)
       .join(context.params.connection);
   }
 };
 
-const hooks: Partial<HooksObject<RoomSubscriptionDto>> = {
+const hooks: Partial<HooksObject<SessionSubscriptionDto>> = {
   before: {
     all: [authenticate("jwt"), mustBeBySocket],
     create: [setUserToSubscribe],
   },
 
   after: {
-    create: [joinRoomChannel],
+    create: [joinSessionChannel],
   },
 };
 

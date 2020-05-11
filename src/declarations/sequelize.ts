@@ -1,16 +1,16 @@
 import { Model, Sequelize } from "sequelize";
 import { UserModel } from "../models/users.model";
-import { RoomModel } from "../models/room.model";
-import { RoomLogModel } from "../models/roomLog.model";
+import { SessionModel } from "../models/sessions.model";
+import { SessionLogModel } from "../models/sessionLogs.model";
 
 /**
  * Model names available on sequelize
  */
 export enum ModelName {
   USER = "user",
-  ROOM = "room",
-  ROOM_LOG = "room_log",
-  ROOM_SUBSCRIPTION = "room_subscription",
+  SESSION = "session",
+  SESSION_LOG = "session_log",
+  SESSION_SUBSCRIPTION = "session_subscription",
 }
 
 /**
@@ -19,8 +19,8 @@ export enum ModelName {
  */
 export type Models = {
   [ModelName.USER]: ModelCtor<UserModel>;
-  [ModelName.ROOM]: ModelCtor<RoomModel>;
-  [ModelName.ROOM_LOG]: ModelCtor<RoomLogModel>;
+  [ModelName.SESSION]: ModelCtor<SessionModel>;
+  [ModelName.SESSION_LOG]: ModelCtor<SessionLogModel>;
 };
 
 /**

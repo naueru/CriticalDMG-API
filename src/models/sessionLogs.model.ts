@@ -8,23 +8,23 @@ import {
   LogTypeEnum,
   LogContent,
 } from "../declarations";
-import { RoomModel } from "./room.model";
+import { SessionModel } from "./sessions.model";
 
-export class RoomLogModel extends CriticalDMGModel {
+export class SessionLogModel extends CriticalDMGModel {
   public type!: LogType;
   public content!: LogContent;
 
   public static associations: {
-    room: Association<RoomLogModel, RoomModel>;
+    session: Association<SessionLogModel, SessionModel>;
   };
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-export default function (app: Application): typeof RoomLogModel {
+export default function (app: Application): typeof SessionLogModel {
   const sequelize = app.get(SettingName.SEQUELIZE);
-  RoomLogModel.init(
+  SessionLogModel.init(
     {
       type: {
         type: DataTypes.ENUM(LogTypeEnum.MESSAGE, LogTypeEnum.EVENT),
@@ -37,8 +37,8 @@ export default function (app: Application): typeof RoomLogModel {
     },
     {
       sequelize,
-      tableName: ModelName.ROOM_LOG,
-      modelName: ModelName.ROOM_LOG,
+      tableName: ModelName.SESSION_LOG,
+      modelName: ModelName.SESSION_LOG,
       hooks: {
         beforeCount(options: any) {
           options.raw = true;
@@ -47,11 +47,11 @@ export default function (app: Application): typeof RoomLogModel {
     }
   );
 
-  RoomLogModel.associate = function (models) {
-    this.belongsTo(models[ModelName.ROOM], {
-      as: "room",
+  SessionLogModel.associate = function (models) {
+    this.belongsTo(models[ModelName.SESSION], {
+      as: "session",
     });
   };
 
-  return RoomLogModel;
+  return SessionLogModel;
 }

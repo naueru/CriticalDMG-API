@@ -12,32 +12,32 @@ import {
   Application,
 } from "../declarations";
 import { UserModel } from "./users.model";
-import { RoomLogModel } from "./roomLog.model";
+import { SessionLogModel } from "./sessionLogs.model";
 
-export class RoomModel extends CriticalDMGModel {
+export class SessionModel extends CriticalDMGModel {
   public name!: string;
 
   public readonly players!: UserModel[];
-  public readonly log!: RoomLogModel[];
+  public readonly log!: SessionLogModel[];
 
   public getPlayers!: HasManyGetAssociationsMixin<UserModel>;
-  public getLog!: HasManyGetAssociationsMixin<RoomLogModel>;
+  public getLog!: HasManyGetAssociationsMixin<SessionLogModel>;
 
   public addPlayer!: HasManyAddAssociationMixin<UserModel, number>;
-  public createLog!: HasManyCreateAssociationMixin<RoomLogModel>;
+  public createLog!: HasManyCreateAssociationMixin<SessionLogModel>;
 
   public static associations: {
-    players: Association<RoomModel, UserModel>;
-    log: Association<RoomModel, RoomLogModel>;
+    players: Association<SessionModel, UserModel>;
+    log: Association<SessionModel, SessionLogModel>;
   };
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-export default function (app: Application): typeof RoomModel {
+export default function (app: Application): typeof SessionModel {
   const sequelize = app.get(SettingName.SEQUELIZE);
-  RoomModel.init(
+  SessionModel.init(
     {
       name: {
         type: DataTypes.STRING,
@@ -46,8 +46,8 @@ export default function (app: Application): typeof RoomModel {
     },
     {
       sequelize,
-      tableName: ModelName.ROOM,
-      modelName: ModelName.ROOM,
+      tableName: ModelName.SESSION,
+      modelName: ModelName.SESSION,
       hooks: {
         beforeCount(options: any) {
           options.raw = true;
@@ -56,16 +56,16 @@ export default function (app: Application): typeof RoomModel {
     }
   );
 
-  RoomModel.associate = function (models) {
+  SessionModel.associate = function (models) {
     this.belongsToMany(models[ModelName.USER], {
-      through: ModelName.ROOM_SUBSCRIPTION,
+      through: ModelName.SESSION_SUBSCRIPTION,
       as: "players",
     });
 
-    this.hasMany(models[ModelName.ROOM_LOG], {
+    this.hasMany(models[ModelName.SESSION_LOG], {
       as: "log",
     });
   };
 
-  return RoomModel;
+  return SessionModel;
 }

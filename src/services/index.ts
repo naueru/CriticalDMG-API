@@ -1,13 +1,13 @@
 import { Application } from "../declarations";
 import users from "./users/users.service";
-import rooms from "./rooms/rooms.service";
-import roomLogs from "./roomLogs/roomsLogs.service";
-import roomSubscriptions from "./roomSubscriptions/roomSubscriptions.service";
+import sessions from "./sessions/sessions.service";
+import sessionLogs from "./sessionLogs/sessionLogs.service";
+import sessionSubscriptions from "./sessionSubscriptions/sessionSubscriptions.service";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application) {
   app.configure(users);
-  app.configure(rooms);
-  app.configure(roomLogs);
-  app.configure(roomSubscriptions);
+  app.configure(sessions);
+  app.configure(sessionLogs);
+  app.configure(sessionSubscriptions);
 }

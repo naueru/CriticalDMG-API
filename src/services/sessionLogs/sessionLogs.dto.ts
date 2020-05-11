@@ -1,9 +1,9 @@
 import { LogType, LogContent } from "../../declarations";
 
-export interface RoomLogDto {
+export interface SessionLogDto {
   type: LogType;
   data: LogContent;
-  roomId: number;
+  sessionId: number;
   createdAt: Date;
   updatedAt: Date;
 }

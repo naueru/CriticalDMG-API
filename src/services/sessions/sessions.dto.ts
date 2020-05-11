@@ -1,4 +1,4 @@
-export interface RoomDTO {
+export interface SessionDTO {
   id: number;
   name: string;
 

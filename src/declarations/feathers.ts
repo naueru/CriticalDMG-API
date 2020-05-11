@@ -3,11 +3,13 @@ import { ServiceAddons } from "@feathersjs/feathers";
 import { Application as ExpressFeathers } from "@feathersjs/express";
 import { UsersService } from "../services/users/users.class";
 import { AuthenticationService } from "@feathersjs/authentication/lib";
-import { RoomsService } from "../services/rooms/rooms.class";
-import { RoomLogDto } from "../services/roomLogs/roomLogs.dto";
+import { SessionService } from "../services/sessions/sessions.class";
+import { SessionLogDto } from "../services/sessionLogs/sessionLogs.dto";
 import { UserDTO } from "../services/users/users.dto";
-import { RoomDTO } from "../services/rooms/rooms.dto";
+import { SessionDTO } from "../services/sessions/sessions.dto";
 import { RealTimeConnection } from "@feathersjs/transport-commons/lib/channels/channel/base";
+import { SessionLogsService } from "../services/sessionLogs/sessionLogs.class";
+import { SessionSubscriptionsService } from "../services/sessionSubscriptions/sessionSubscriptions.class";
 
 export enum SettingName {
   SEQUELIZE = "sequelizeClient",
@@ -22,9 +24,9 @@ export enum SettingName {
 export enum ServiceName {
   USERS = "users",
   AUTHENTICATION = "authentication",
-  ROOMS = "rooms",
-  ROOM_LOGS = "roomLogs",
-  ROOM_SUBSCRIPTIONS = "roomSubscriptions",
+  SESSION = "sessions",
+  SESSION_LOGS = "sessionLogs",
+  SESSION_SUBSCRIPTIONS = "sessionSubscriptions",
 }
 
 export interface DatabaseConfiguration {
@@ -76,14 +78,15 @@ export interface SettingTypes {
 export interface ServiceTypes {
   [ServiceName.USERS]: UsersService & ServiceAddons<any>;
 
-  [ServiceName.ROOMS]: RoomsService & ServiceAddons<RoomDTO>;
+  [ServiceName.SESSION]: SessionService & ServiceAddons<SessionDTO>;
 
-  [ServiceName.ROOM_LOGS]: RoomsService & ServiceAddons<RoomLogDto>;
+  [ServiceName.SESSION_LOGS]: SessionLogsService & ServiceAddons<SessionLogDto>;
 
-  [ServiceName.ROOM_SUBSCRIPTIONS]: RoomsService & ServiceAddons<any>;
+  [ServiceName.SESSION_SUBSCRIPTIONS]: SessionSubscriptionsService &
+    ServiceAddons<any>;
 
   [ServiceName.AUTHENTICATION]: AuthenticationService &
-    ServiceAddons<RoomLogDto>;
+    ServiceAddons<SessionLogDto>;
 }
 
 export type Pagination = void | { default: number; max: number };
