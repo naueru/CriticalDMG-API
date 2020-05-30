@@ -3,7 +3,7 @@ import users from "./users/users.service";
 import sessions from "./sessions/sessions.service";
 import sessionLogs from "./sessionLogs/sessionLogs.service";
 import sessionSubscriptions from "./sessionSubscriptions/sessionSubscriptions.service";
-import campaigns from "./campaign/campaigns.service";
+import campaigns from "./campaigns/campaigns.service";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application) {

@@ -1,6 +1,6 @@
 import { Application, ServiceName, SettingName } from "../../declarations";
 import { CampaignService } from "./campaigns.class";
-import createModel from "../../models/campaign.model";
+import createModel from "../../models/campaigns.model";
 import hooks from "./campaigns.hooks";
 
 export default function (app: Application) {

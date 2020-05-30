@@ -2,7 +2,7 @@ import { Model, Sequelize } from "sequelize";
 import { UserModel } from "../models/users.model";
 import { SessionModel } from "../models/sessions.model";
 import { SessionLogModel } from "../models/sessionLogs.model";
-import { CampaignModel } from "../models/campaign.model";
+import { CampaignModel } from "../models/campaigns.model";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 /**

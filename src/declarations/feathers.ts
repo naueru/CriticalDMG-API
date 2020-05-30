@@ -10,8 +10,8 @@ import { SessionDTO } from "../services/sessions/sessions.dto";
 import { RealTimeConnection } from "@feathersjs/transport-commons/lib/channels/channel/base";
 import { SessionLogsService } from "../services/sessionLogs/sessionLogs.class";
 import { SessionSubscriptionsService } from "../services/sessionSubscriptions/sessionSubscriptions.class";
-import { CampaignDTO } from "../services/campaign/campaigns.dto";
-import { CampaignService } from "../services/campaign/campaigns.class";
+import { CampaignDTO } from "../services/campaigns/campaigns.dto";
+import { CampaignService } from "../services/campaigns/campaigns.class";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export enum SettingName {
