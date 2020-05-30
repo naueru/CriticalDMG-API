@@ -12,6 +12,7 @@ import { SessionLogsService } from "../services/sessionLogs/sessionLogs.class";
 import { SessionSubscriptionsService } from "../services/sessionSubscriptions/sessionSubscriptions.class";
 import { CampaignDTO } from "../services/campaign/campaigns.dto";
 import { CampaignService } from "../services/campaign/campaigns.class";
+// Don't remove this comment. It's needed to format import lines nicely.
 
 export enum SettingName {
   SEQUELIZE = "sequelizeClient",
@@ -30,6 +31,7 @@ export enum ServiceName {
   SESSION_LOGS = "sessionLogs",
   SESSION_SUBSCRIPTIONS = "sessionSubscriptions",
   CAMPAIGNS = "campaigns",
+  // Don't remove this comment. It's needed to add service names names nicely.
 }
 
 export interface DatabaseConfiguration {
@@ -92,6 +94,8 @@ export interface ServiceTypes {
     ServiceAddons<SessionLogDto>;
 
   [ServiceName.CAMPAIGNS]: CampaignService & ServiceAddons<CampaignDTO>;
+
+  // Don't remove this comment. It's needed to add service types names nicely.
 }
 
 export type Pagination = void | { default: number; max: number };

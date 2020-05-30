@@ -12,4 +12,5 @@ export default function (app: Application) {
   app.configure(sessionLogs);
   app.configure(sessionSubscriptions);
   app.configure(campaigns);
+  // Don't remove this comment. It's needed to format configure service nicely.
 }
