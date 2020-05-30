@@ -10,6 +10,8 @@ import { SessionDTO } from "../services/sessions/sessions.dto";
 import { RealTimeConnection } from "@feathersjs/transport-commons/lib/channels/channel/base";
 import { SessionLogsService } from "../services/sessionLogs/sessionLogs.class";
 import { SessionSubscriptionsService } from "../services/sessionSubscriptions/sessionSubscriptions.class";
+import { CampaignDTO } from "../services/campaign/campaigns.dto";
+import { CampaignService } from "../services/campaign/campaigns.class";
 
 export enum SettingName {
   SEQUELIZE = "sequelizeClient",
@@ -24,9 +26,10 @@ export enum SettingName {
 export enum ServiceName {
   USERS = "users",
   AUTHENTICATION = "authentication",
-  SESSION = "sessions",
+  SESSIONS = "sessions",
   SESSION_LOGS = "sessionLogs",
   SESSION_SUBSCRIPTIONS = "sessionSubscriptions",
+  CAMPAIGNS = "campaigns",
 }
 
 export interface DatabaseConfiguration {
@@ -78,7 +81,7 @@ export interface SettingTypes {
 export interface ServiceTypes {
   [ServiceName.USERS]: UsersService & ServiceAddons<any>;
 
-  [ServiceName.SESSION]: SessionService & ServiceAddons<SessionDTO>;
+  [ServiceName.SESSIONS]: SessionService & ServiceAddons<SessionDTO>;
 
   [ServiceName.SESSION_LOGS]: SessionLogsService & ServiceAddons<SessionLogDto>;
 
@@ -87,6 +90,8 @@ export interface ServiceTypes {
 
   [ServiceName.AUTHENTICATION]: AuthenticationService &
     ServiceAddons<SessionLogDto>;
+
+  [ServiceName.CAMPAIGNS]: CampaignService & ServiceAddons<CampaignDTO>;
 }
 
 export type Pagination = void | { default: number; max: number };
