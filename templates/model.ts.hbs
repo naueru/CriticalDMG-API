@@ -1,5 +1,6 @@
 
 import {
+  DataTypes,
   ModelName,
   SettingName,
   CriticalDMGModel,
@@ -7,6 +8,10 @@ import {
 } from "../declarations";
 
 export class {{properCase name}}Model extends CriticalDMGModel {
+  {{#each properties}}
+    {{camelCase this.propertyName}}!: {{this.propertyType}};
+  {{/each}}
+  
   
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -16,6 +21,13 @@ export default function (app: Application): typeof {{properCase name}}Model {
   const sequelize = app.get(SettingName.SEQUELIZE);
   {{properCase name}}Model.init(
     {
+    {{#each properties}}
+      {{camelCase this.propertyName}}: {
+        type: DataTypes.{{ this.sequelizeType }},
+        allowNull: {{ this.propertyIsRequired}},
+      },
+    {{/each}}
+
     },
     {
       sequelize,

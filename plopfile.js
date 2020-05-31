@@ -116,39 +116,94 @@ const modifyServiceConfiguration = {
   template: SERVICE_CONFIGURATION_TEMPLATE
 }
 
+const askServiceName = {
+  type: "input",
+  name: "name",
+  message: "Service name",
+}
+
+const askServicePluralName =  {
+  type: "input",
+  name: "pluralName",
+  message: "Service plural name",
+}
+
+const askAddServiceProperty = {
+  type: "confirm",
+  name: "addProperty",
+  message: 'Do you want to add a property?'
+}
+
+const askPropertyName = {
+  type: "input",
+  name: "propertyName",
+  message: "Write property Name"
+}
+
+const askPropertyType = {
+  type: "list",
+  name: "propertyType",
+  choices: ['number', 'string', 'Date'],
+  message: "Choose property type"
+}
+
+const askPropertyIsRequired = {
+  type: "confirm",
+  name: "propertyIsRequired",
+  message: "Property is required?"
+}
+
+const typescriptToSequelizeMap = {
+  ['number']: 'INTEGER',
+  ['string']: 'STRING',
+  ['Date']: 'DATE',
+}
+
+const askPropertiesLoop = async (promptInstance, inputs = []) => {
+  const { addProperty } = await promptInstance.prompt(askAddServiceProperty);
+  if (!addProperty){
+    return inputs;
+  }
+  const propertyData = await promptInstance.prompt([askPropertyName, askPropertyType, askPropertyIsRequired]);
+  const sequelizeType = typescriptToSequelizeMap[propertyData.propertyType];
+  const newInputs = [ ...inputs, { sequelizeType ,...propertyData }]
+  return askPropertiesLoop(promptInstance, newInputs)
+}
+
+const createServicePrompt = async (promptInstance) => {
+  const { name } = await promptInstance.prompt(askServiceName);
+  const { pluralName } = await promptInstance.prompt({ default: `${name}s`, ...askServicePluralName });
+  const properties = await askPropertiesLoop(promptInstance)
+  return {
+    name,
+    pluralName,
+    properties
+  }
+}
+
+
 module.exports = function (plop) {
   plop.setGenerator("service", {
     description:
       "Create a new entity with a model , service, hooks, types and route configurated",
-    prompts: [
-      {
-        type: "input",
-        name: "name",
-        message: "service name",
-      },
-      {
-        type: "input",
-        name: "pluralName",
-        message: "service plural name",
-      },
-    ],
+    prompts: createServicePrompt,
     actions: [
-      addClass, 
-      addService, 
-      addHooks, 
+      //addClass, 
+      //addService, 
+      //addHooks, 
       addDto, 
       addModel, 
-
-      modifyFeathersImport,
-      modifyFeathersServiceName,
-      modifyFeathersServiceTypes,
-
-      modifySequelizeImport,
-      modifySequelizeModelNames,
-      modifySequelizeModels,
-
-      modifyServiceConfigurationImport,
-      modifyServiceConfiguration
+//
+      //modifyFeathersImport,
+      //modifyFeathersServiceName,
+      //modifyFeathersServiceTypes,
+//
+      //modifySequelizeImport,
+      //modifySequelizeModelNames,
+      //modifySequelizeModels,
+//
+      //modifyServiceConfigurationImport,
+      //modifyServiceConfiguration
     ],
   });
 };
