@@ -1,0 +1,12 @@
+import { Service, SequelizeServiceOptions } from "feathers-sequelize";
+import { Application } from "../../declarations";
+import { {{properCase name}}Model } from "../../models/{{camelCase pluralName}}.model";
+import { {{properCase name}}DTO } from "./{{camelCase pluralName}}.dto";
+
+export class {{properCase name}}Service extends Service<{{properCase name}}DTO> {
+  Model!: {{properCase name}}Model;
+
+  constructor(options: Partial<SequelizeServiceOptions>, app: Application) {
+    super(options);
+  }
+}

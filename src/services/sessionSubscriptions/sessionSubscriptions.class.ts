@@ -8,7 +8,7 @@ export class SessionSubscriptionsService
   private sessionService!: SessionService;
 
   constructor(app: Application) {
-    this.sessionService = app.services[ServiceName.SESSION];
+    this.sessionService = app.services[ServiceName.SESSIONS];
   }
 
   async create(data: SessionSubscriptionDto) {

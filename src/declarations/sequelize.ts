@@ -2,6 +2,8 @@ import { Model, Sequelize } from "sequelize";
 import { UserModel } from "../models/users.model";
 import { SessionModel } from "../models/sessions.model";
 import { SessionLogModel } from "../models/sessionLogs.model";
+import { CampaignModel } from "../models/campaigns.model";
+// Don't remove this comment. It's needed to format import lines nicely.
 
 /**
  * Model names available on sequelize
@@ -11,6 +13,8 @@ export enum ModelName {
   SESSION = "session",
   SESSION_LOG = "session_log",
   SESSION_SUBSCRIPTION = "session_subscription",
+  CAMPAIGN = "campaign",
+  // Don't remove this comment. It's needed to add model names nicely.
 }
 
 /**
@@ -21,6 +25,8 @@ export type Models = {
   [ModelName.USER]: ModelCtor<UserModel>;
   [ModelName.SESSION]: ModelCtor<SessionModel>;
   [ModelName.SESSION_LOG]: ModelCtor<SessionLogModel>;
+  [ModelName.CAMPAIGN]: ModelCtor<CampaignModel>;
+  // Don't remove this comment. It's needed to add models nicely.
 };
 
 /**

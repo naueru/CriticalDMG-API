@@ -11,7 +11,7 @@ export default function (app: Application) {
   };
 
   // Initialize our service with any options it requires
-  app.use("/users", new UsersService(options, app));
+  app.use(`/${ServiceName.USERS}`, new UsersService(options, app));
 
   // Get our initialized service so that we can register hooks
   const service = app.service(ServiceName.USERS);

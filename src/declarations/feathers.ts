@@ -10,6 +10,9 @@ import { SessionDTO } from "../services/sessions/sessions.dto";
 import { RealTimeConnection } from "@feathersjs/transport-commons/lib/channels/channel/base";
 import { SessionLogsService } from "../services/sessionLogs/sessionLogs.class";
 import { SessionSubscriptionsService } from "../services/sessionSubscriptions/sessionSubscriptions.class";
+import { CampaignDTO } from "../services/campaigns/campaigns.dto";
+import { CampaignService } from "../services/campaigns/campaigns.class";
+// Don't remove this comment. It's needed to format import lines nicely.
 
 export enum SettingName {
   SEQUELIZE = "sequelizeClient",
@@ -24,9 +27,11 @@ export enum SettingName {
 export enum ServiceName {
   USERS = "users",
   AUTHENTICATION = "authentication",
-  SESSION = "sessions",
+  SESSIONS = "sessions",
   SESSION_LOGS = "sessionLogs",
   SESSION_SUBSCRIPTIONS = "sessionSubscriptions",
+  CAMPAIGNS = "campaigns",
+  // Don't remove this comment. It's needed to add service names names nicely.
 }
 
 export interface DatabaseConfiguration {
@@ -78,7 +83,7 @@ export interface SettingTypes {
 export interface ServiceTypes {
   [ServiceName.USERS]: UsersService & ServiceAddons<any>;
 
-  [ServiceName.SESSION]: SessionService & ServiceAddons<SessionDTO>;
+  [ServiceName.SESSIONS]: SessionService & ServiceAddons<SessionDTO>;
 
   [ServiceName.SESSION_LOGS]: SessionLogsService & ServiceAddons<SessionLogDto>;
 
@@ -87,6 +92,10 @@ export interface ServiceTypes {
 
   [ServiceName.AUTHENTICATION]: AuthenticationService &
     ServiceAddons<SessionLogDto>;
+
+  [ServiceName.CAMPAIGNS]: CampaignService & ServiceAddons<CampaignDTO>;
+
+  // Don't remove this comment. It's needed to add service types names nicely.
 }
 
 export type Pagination = void | { default: number; max: number };

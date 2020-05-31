@@ -9,7 +9,7 @@ export default function (app: Application) {
     paginate: app.get(SettingName.PAGINATE),
   };
 
-  app.use("/sessionLogs", new SessionLogsService(options, app));
+  app.use(`/${ServiceName.SESSION_LOGS}`, new SessionLogsService(options, app));
 
   const service = app.service(ServiceName.SESSION_LOGS);
 

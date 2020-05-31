@@ -30,7 +30,8 @@
     "start": "node lib/",
     "jest": "jest  --forceExit",
     "compile": "rm -rf lib/ && tsc",
-    "build": "yarn run compile"
+    "build": "yarn run compile",
+    "plop": "plop"
   },
   "standard": {
     "env": [
@@ -70,6 +71,7 @@
     "axios": "^0.19.2",
     "jest": "^25.2.3",
     "nodemon": "^2.0.2",
+    "plop": "^2.7.1",
     "ts-jest": "^25.2.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "tslint": "^6.0.0",

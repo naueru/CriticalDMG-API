@@ -9,9 +9,9 @@ export default function (app: Application) {
     paginate: app.get(SettingName.PAGINATE),
   };
 
-  app.use("/sessions", new SessionService(options, app));
+  app.use(`/${ServiceName.SESSIONS}`, new SessionService(options, app));
 
-  const service = app.service(ServiceName.SESSION);
+  const service = app.service(ServiceName.SESSIONS);
 
   service.publish((data) => app.channel(`session/${data.id}`));
 

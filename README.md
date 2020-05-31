@@ -35,13 +35,10 @@ Simply run `npm test` and all your tests in the `test/` directory will be run.
 
 ## Scaffolding
 
-Feathers has a powerful command line interface. Here are a few things it can do:
+Critical has is custom scaffolding service generator. Run and follow instructions
 
 ```bash
-npm install -g @feathersjs/cli          # Install Feathers CL
-feathers generate service               # Generate a new Service
-feathers generate hook                  # Generate a new Hook
-feathers help                           # Show all commands
+npm run plop
 ```
 
 ## Help
