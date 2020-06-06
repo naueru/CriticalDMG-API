@@ -1,6 +1,6 @@
 
+import { DataTypes } from "sequelize";
 import {
-  DataTypes,
   ModelName,
   SettingName,
   CriticalDMGModel,
@@ -8,10 +8,9 @@ import {
 } from "../declarations";
 
 export class {{properCase name}}Model extends CriticalDMGModel {
-  {{#each properties}}
-    {{camelCase this.propertyName}}!: {{this.propertyType}};
-  {{/each}}
-  
+{{#each properties}}
+  {{camelCase this.propertyName}}!: {{this.propertyType}};
+{{/each}}
   
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;

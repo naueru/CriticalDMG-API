@@ -6,14 +6,10 @@ import {
   HasManyAddAssociationMixin,
   HasManyGetAssociationsMixin,
 } from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+import { ModelName, SettingName, CriticalDMGModel, Application } from "../declarations";
 import { SessionModel } from "./sessions.model";
 import { UserModel } from "./users.model";
+import { CharacterModel } from "./characters.model";
 
 export class CampaignModel extends CriticalDMGModel {
   public name!: string;
@@ -24,19 +20,22 @@ export class CampaignModel extends CriticalDMGModel {
   public addSession!: HasManyAddAssociationMixin<SessionModel, number>;
   public setOwner!: HasOneSetAssociationMixin<UserModel, number>;
 
-  /** ADD Character model association (players)*/
+  public addPlayer!: HasManyAddAssociationMixin<CharacterModel, number>;
+  public getPlayers!: HasManyGetAssociationsMixin<CharacterModel>;
+
+  public addNpc!: HasManyAddAssociationMixin<CharacterModel, number>;
+  public getNpcs!: HasManyGetAssociationsMixin<CharacterModel>;
   /** ADD Event model association */
   /** ADD CampaignTemplate model association */
-  /** ADD haracter model association npc */
 
   public static associations: {
     session: Association<CampaignModel, SessionModel>;
     owner: Association<CampaignModel, UserModel>;
+    npcs: Association<CampaignModel, CharacterModel>;
+    players: Association<CampaignModel, CharacterModel>;
 
-    /** ADD Character model association (players)*/
     /** ADD Event model association */
     /** ADD CampaignTemplate model association */
-    /** ADD haracter model association npc */
   };
 
   public readonly createdAt!: Date;
@@ -71,6 +70,15 @@ export default function (app: Application): typeof CampaignModel {
     this.hasOne(models[ModelName.USER], {
       as: "owner",
     });
+
+    // TODO should we merge these two?
+    this.hasMany(models[ModelName.CHARACTER], {
+      as: "players",
+    });
+    this.hasMany(models[ModelName.CHARACTER], {
+      as: "npcs",
+    });
+
     /** ADD Character model association (players)*/
     /** ADD Event model association */
     /** ADD CampaignTemplate model association */

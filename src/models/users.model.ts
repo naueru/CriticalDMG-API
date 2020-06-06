@@ -1,10 +1,6 @@
-import { DataTypes } from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+import { DataTypes, Association, HasManyAddAssociationMixin } from "sequelize";
+import { ModelName, SettingName, CriticalDMGModel, Application } from "../declarations";
+import { CharacterModel } from "./characters.model";
 
 export class UserModel extends CriticalDMGModel {
   public email!: string;
@@ -12,6 +8,12 @@ export class UserModel extends CriticalDMGModel {
   public alterEgo!: string;
   public picture!: string;
   public icon!: string;
+
+  public addCharacter!: HasManyAddAssociationMixin<CharacterModel, number>;
+
+  public static associations: {
+    characters: Association<UserModel, CharacterModel>;
+  };
 
   public password!: string;
   public readonly createdAt!: Date;
@@ -64,6 +66,10 @@ export default function (app: Application): typeof UserModel {
   UserModel.associate = function (models) {
     this.belongsToMany(models[ModelName.SESSION], {
       through: ModelName.SESSION_SUBSCRIPTION,
+    });
+
+    this.hasMany(models[ModelName.SESSION], {
+      as: "characters",
     });
   };
 

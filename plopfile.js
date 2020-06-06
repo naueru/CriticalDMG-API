@@ -188,22 +188,22 @@ module.exports = function (plop) {
       "Create a new entity with a model , service, hooks, types and route configurated",
     prompts: createServicePrompt,
     actions: [
-      //addClass, 
-      //addService, 
-      //addHooks, 
+      addClass, 
+      addService, 
+      addHooks, 
       addDto, 
       addModel, 
-//
-      //modifyFeathersImport,
-      //modifyFeathersServiceName,
-      //modifyFeathersServiceTypes,
-//
-      //modifySequelizeImport,
-      //modifySequelizeModelNames,
-      //modifySequelizeModels,
-//
-      //modifyServiceConfigurationImport,
-      //modifyServiceConfiguration
+
+      modifyFeathersImport,
+      modifyFeathersServiceName,
+      modifyFeathersServiceTypes,
+
+      modifySequelizeImport,
+      modifySequelizeModelNames,
+      modifySequelizeModels,
+
+      modifyServiceConfigurationImport,
+      modifyServiceConfiguration
     ],
   });
 };

@@ -12,6 +12,8 @@ import { SessionLogsService } from "../services/sessionLogs/sessionLogs.class";
 import { SessionSubscriptionsService } from "../services/sessionSubscriptions/sessionSubscriptions.class";
 import { CampaignDTO } from "../services/campaigns/campaigns.dto";
 import { CampaignService } from "../services/campaigns/campaigns.class";
+import { CharacterDTO } from "../services/characters/characters.dto";
+import { CharacterService } from "../services/characters/characters.class";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export enum SettingName {
@@ -31,6 +33,7 @@ export enum ServiceName {
   SESSION_LOGS = "sessionLogs",
   SESSION_SUBSCRIPTIONS = "sessionSubscriptions",
   CAMPAIGNS = "campaigns",
+  CHARACTERS = "characters",
   // Don't remove this comment. It's needed to add service names names nicely.
 }
 
@@ -87,13 +90,15 @@ export interface ServiceTypes {
 
   [ServiceName.SESSION_LOGS]: SessionLogsService & ServiceAddons<SessionLogDto>;
 
-  [ServiceName.SESSION_SUBSCRIPTIONS]: SessionSubscriptionsService &
-    ServiceAddons<any>;
+  [ServiceName.SESSION_SUBSCRIPTIONS]: SessionSubscriptionsService & ServiceAddons<any>;
 
-  [ServiceName.AUTHENTICATION]: AuthenticationService &
-    ServiceAddons<SessionLogDto>;
+  [ServiceName.AUTHENTICATION]: AuthenticationService & ServiceAddons<any>;
 
   [ServiceName.CAMPAIGNS]: CampaignService & ServiceAddons<CampaignDTO>;
+
+  [ServiceName.CHARACTERS]: CharacterService & ServiceAddons<CharacterDTO>;
+
+  [ServiceName.CHARACTERS]: CharacterService & ServiceAddons<CharacterDTO>;
 
   // Don't remove this comment. It's needed to add service types names nicely.
 }
