@@ -2,7 +2,7 @@ import * as feathersAuthentication from "@feathersjs/authentication";
 import * as local from "@feathersjs/authentication-local";
 import { UserDTO } from "./users.dto";
 import { Hook } from "@feathersjs/feathers";
-import { ERROR_CODE } from "../../constants";
+import { ERROR_CODE } from "../../declarations/constants";
 const { FeathersError } = require("@feathersjs/errors");
 // Don't remove this comment. It's needed to format import lines nicely.
 
