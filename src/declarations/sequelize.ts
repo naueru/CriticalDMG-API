@@ -9,6 +9,7 @@ import { GameEngineModel } from "../models/gameEngines.model";
 import { AssetModel } from "../models/assets.model";
 import { EventModel } from "../models/events.model";
 import { EventTemplateModel } from "../models/eventTemplates.model";
+import { RollModel } from "../models/rolls.model";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 /**
@@ -26,6 +27,7 @@ export enum ModelName {
   ASSET = "asset",
   EVENT = "event",
   EVENT_TEMPLATE = "event_template",
+  ROLL = "roll",
   // Don't remove this comment. It's needed to add model names nicely.
 }
 
@@ -44,6 +46,7 @@ export type Models = {
   [ModelName.ASSET]: ModelCtor<AssetModel>;
   [ModelName.EVENT]: ModelCtor<EventModel>;
   [ModelName.EVENT_TEMPLATE]: ModelCtor<EventTemplateModel>;
+  [ModelName.ROLL]: ModelCtor<RollModel>;
   // Don't remove this comment. It's needed to add models nicely.
 };
 

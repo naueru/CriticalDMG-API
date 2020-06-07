@@ -1,6 +1,7 @@
 import { DataTypes, BelongsToGetAssociationMixin, Association } from "sequelize";
 import { ModelName, SettingName, CriticalDMGModel, Application } from "../declarations";
 import { UserModel } from "./users.model";
+import { CampaignModel } from "./campaigns.model";
 
 export class CharacterModel extends CriticalDMGModel {
   name!: string;
@@ -9,6 +10,7 @@ export class CharacterModel extends CriticalDMGModel {
 
   public static associations: {
     user: Association<CharacterModel, UserModel>;
+    campaign: Association<CharacterModel, CampaignModel>;
   };
 
   public readonly createdAt!: Date;
@@ -37,9 +39,15 @@ export default function (app: Application): typeof CharacterModel {
   );
 
   CharacterModel.associate = function (models) {
-    this.belongsTo(models[ModelName.CAMPAIGN]);
+    this.belongsTo(models[ModelName.CAMPAIGN], {
+      as: "campaign",
+    });
 
-    this.belongsTo(models[ModelName.USER]);
+    this.belongsTo(models[ModelName.USER], {
+      as: "user",
+    });
+
+    this.hasMany(models[ModelName.ROLL]);
   };
 
   return CharacterModel;
