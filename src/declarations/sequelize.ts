@@ -7,6 +7,7 @@ import { CharacterModel } from "../models/characters.model";
 import { CampaignTemplateModel } from "../models/campaignTemplates.model";
 import { GameEngineModel } from "../models/gameEngines.model";
 import { AssetModel } from "../models/assets.model";
+import { EventModel } from "../models/events.model";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 /**
@@ -22,6 +23,7 @@ export enum ModelName {
   CAMPAIGN_TEMPLATE = "campaign_template",
   GAME_ENGINE = "game_engine",
   ASSET = "asset",
+  EVENT = "event",
   // Don't remove this comment. It's needed to add model names nicely.
 }
 
@@ -38,6 +40,7 @@ export type Models = {
   [ModelName.CAMPAIGN_TEMPLATE]: ModelCtor<CampaignTemplateModel>;
   [ModelName.GAME_ENGINE]: ModelCtor<GameEngineModel>;
   [ModelName.ASSET]: ModelCtor<AssetModel>;
+  [ModelName.EVENT]: ModelCtor<EventModel>;
   // Don't remove this comment. It's needed to add models nicely.
 };
 

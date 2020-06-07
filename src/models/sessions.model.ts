@@ -5,13 +5,9 @@ import {
   HasManyCreateAssociationMixin,
   HasManyAddAssociationMixin,
 } from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+import { ModelName, SettingName, CriticalDMGModel, Application } from "../declarations";
 import { UserModel } from "./users.model";
+import { EventModel } from "./events.model";
 import { SessionLogModel } from "./sessionLogs.model";
 
 export class SessionModel extends CriticalDMGModel {
@@ -26,9 +22,13 @@ export class SessionModel extends CriticalDMGModel {
   public addPlayer!: HasManyAddAssociationMixin<UserModel, number>;
   public createLog!: HasManyCreateAssociationMixin<SessionLogModel>;
 
+  public addEvent!: HasManyAddAssociationMixin<EventModel, number>;
+  public createEvent!: HasManyCreateAssociationMixin<EventModel>;
+
   public static associations: {
     players: Association<SessionModel, UserModel>;
     log: Association<SessionModel, SessionLogModel>;
+    events: Association<SessionModel, EventModel>;
   };
 
   public readonly createdAt!: Date;
@@ -64,6 +64,10 @@ export default function (app: Application): typeof SessionModel {
 
     this.hasMany(models[ModelName.SESSION_LOG], {
       as: "log",
+    });
+
+    this.hasMany(models[ModelName.EVENT], {
+      as: "events",
     });
   };
 
