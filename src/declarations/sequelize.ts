@@ -4,6 +4,7 @@ import { SessionModel } from "../models/sessions.model";
 import { SessionLogModel } from "../models/sessionLogs.model";
 import { CampaignModel } from "../models/campaigns.model";
 import { CharacterModel } from "../models/characters.model";
+import { CampaignTemplateModel } from "../models/campaignTemplates.model";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 /**
@@ -16,6 +17,7 @@ export enum ModelName {
   SESSION_SUBSCRIPTION = "session_subscription",
   CAMPAIGN = "campaign",
   CHARACTER = "character",
+  CAMPAIGN_TEMPLATE = "campaign_template",
   // Don't remove this comment. It's needed to add model names nicely.
 }
 
@@ -29,6 +31,7 @@ export type Models = {
   [ModelName.SESSION_LOG]: ModelCtor<SessionLogModel>;
   [ModelName.CAMPAIGN]: ModelCtor<CampaignModel>;
   [ModelName.CHARACTER]: ModelCtor<CharacterModel>;
+  [ModelName.CAMPAIGN_TEMPLATE]: ModelCtor<CampaignTemplateModel>;
   // Don't remove this comment. It's needed to add models nicely.
 };
 

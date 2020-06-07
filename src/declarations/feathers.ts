@@ -14,6 +14,8 @@ import { CampaignDTO } from "../services/campaigns/campaigns.dto";
 import { CampaignService } from "../services/campaigns/campaigns.class";
 import { CharacterDTO } from "../services/characters/characters.dto";
 import { CharacterService } from "../services/characters/characters.class";
+import { CampaignTemplateDTO } from "../services/campaignTemplates/campaignTemplates.dto";
+import { CampaignTemplateService } from "../services/campaignTemplates/campaignTemplates.class";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export enum SettingName {
@@ -34,6 +36,7 @@ export enum ServiceName {
   SESSION_SUBSCRIPTIONS = "sessionSubscriptions",
   CAMPAIGNS = "campaigns",
   CHARACTERS = "characters",
+  CAMPAIGN_TEMPLATES = "campaignTemplates",
   // Don't remove this comment. It's needed to add service names names nicely.
 }
 
@@ -100,7 +103,9 @@ export interface ServiceTypes {
 
   [ServiceName.CHARACTERS]: CharacterService & ServiceAddons<CharacterDTO>;
 
-  // Don't remove this comment. It's needed to add service types names nicely.
+  [ServiceName.CAMPAIGN_TEMPLATES]: CampaignTemplateService & ServiceAddons<CampaignTemplateDTO>;
+
+// Don't remove this comment. It's needed to add service types names nicely.
 }
 
 export type Pagination = void | { default: number; max: number };

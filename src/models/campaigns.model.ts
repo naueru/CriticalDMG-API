@@ -10,6 +10,7 @@ import { ModelName, SettingName, CriticalDMGModel, Application } from "../declar
 import { SessionModel } from "./sessions.model";
 import { UserModel } from "./users.model";
 import { CharacterModel } from "./characters.model";
+import { CampaignTemplateModel } from "./campaignTemplates.model";
 
 export class CampaignModel extends CriticalDMGModel {
   public name!: string;
@@ -25,14 +26,16 @@ export class CampaignModel extends CriticalDMGModel {
 
   public addNpc!: HasManyAddAssociationMixin<CharacterModel, number>;
   public getNpcs!: HasManyGetAssociationsMixin<CharacterModel>;
+
+  public getTemplate!: HasOneGetAssociationMixin<CampaignTemplateModel>;
   /** ADD Event model association */
-  /** ADD CampaignTemplate model association */
 
   public static associations: {
     session: Association<CampaignModel, SessionModel>;
     owner: Association<CampaignModel, UserModel>;
     npcs: Association<CampaignModel, CharacterModel>;
     players: Association<CampaignModel, CharacterModel>;
+    template: Association<CampaignModel, CampaignTemplateModel>;
 
     /** ADD Event model association */
     /** ADD CampaignTemplate model association */
@@ -67,6 +70,7 @@ export default function (app: Application): typeof CampaignModel {
     this.hasMany(models[ModelName.SESSION], {
       as: "sessions",
     });
+
     this.hasOne(models[ModelName.USER], {
       as: "owner",
     });
@@ -79,10 +83,11 @@ export default function (app: Application): typeof CampaignModel {
       as: "npcs",
     });
 
-    /** ADD Character model association (players)*/
+    this.hasOne(models[ModelName.CAMPAIGN_TEMPLATE], {
+      as: "template",
+    });
+
     /** ADD Event model association */
-    /** ADD CampaignTemplate model association */
-    /** ADD haracter model association npc */
   };
 
   return CampaignModel;

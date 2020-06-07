@@ -5,6 +5,7 @@ import sessionLogs from "./sessionLogs/sessionLogs.service";
 import sessionSubscriptions from "./sessionSubscriptions/sessionSubscriptions.service";
 import campaigns from "./campaigns/campaigns.service";
 import characters from "./characters/characters.service";
+import campaignTemplates from "./campaignTemplates/campaignTemplates.service";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application) {
@@ -14,5 +15,6 @@ export default function (app: Application) {
   app.configure(sessionSubscriptions);
   app.configure(campaigns);
   app.configure(characters);
+app.configure(campaignTemplates);
 // Don't remove this comment. It's needed to format configure service nicely.
 }
