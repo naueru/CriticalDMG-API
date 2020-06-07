@@ -21,7 +21,7 @@ export default function (app: Application): typeof CharacterModel {
     {
       name: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
     },
     {

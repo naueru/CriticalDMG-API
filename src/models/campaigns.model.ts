@@ -5,6 +5,7 @@ import {
   HasOneGetAssociationMixin,
   HasManyAddAssociationMixin,
   HasManyGetAssociationsMixin,
+  BelongsToGetAssociationMixin,
 } from "sequelize";
 import { ModelName, SettingName, CriticalDMGModel, Application } from "../declarations";
 import { SessionModel } from "./sessions.model";
@@ -27,7 +28,7 @@ export class CampaignModel extends CriticalDMGModel {
   public addNpc!: HasManyAddAssociationMixin<CharacterModel, number>;
   public getNpcs!: HasManyGetAssociationsMixin<CharacterModel>;
 
-  public getTemplate!: HasOneGetAssociationMixin<CampaignTemplateModel>;
+  public getTemplate!: BelongsToGetAssociationMixin<CampaignTemplateModel>;
   /** ADD Event model association */
 
   public static associations: {
@@ -83,7 +84,7 @@ export default function (app: Application): typeof CampaignModel {
       as: "npcs",
     });
 
-    this.hasOne(models[ModelName.CAMPAIGN_TEMPLATE], {
+    this.belongsTo(models[ModelName.CAMPAIGN_TEMPLATE], {
       as: "template",
     });
 

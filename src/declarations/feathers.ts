@@ -16,6 +16,10 @@ import { CharacterDTO } from "../services/characters/characters.dto";
 import { CharacterService } from "../services/characters/characters.class";
 import { CampaignTemplateDTO } from "../services/campaignTemplates/campaignTemplates.dto";
 import { CampaignTemplateService } from "../services/campaignTemplates/campaignTemplates.class";
+import { GameEngineDTO } from "../services/gameEngines/gameEngines.dto";
+import { GameEngineService } from "../services/gameEngines/gameEngines.class";
+import { AssetDTO } from "../services/assets/assets.dto";
+import { AssetService } from "../services/assets/assets.class";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export enum SettingName {
@@ -37,6 +41,8 @@ export enum ServiceName {
   CAMPAIGNS = "campaigns",
   CHARACTERS = "characters",
   CAMPAIGN_TEMPLATES = "campaignTemplates",
+  GAME_ENGINES = "gameEngines",
+  ASSETS = "assets",
   // Don't remove this comment. It's needed to add service names names nicely.
 }
 
@@ -104,6 +110,10 @@ export interface ServiceTypes {
   [ServiceName.CHARACTERS]: CharacterService & ServiceAddons<CharacterDTO>;
 
   [ServiceName.CAMPAIGN_TEMPLATES]: CampaignTemplateService & ServiceAddons<CampaignTemplateDTO>;
+
+[ServiceName.GAME_ENGINES]: GameEngineService & ServiceAddons<GameEngineDTO>;
+
+[ServiceName.ASSETS]: AssetService & ServiceAddons<AssetDTO>;
 
 // Don't remove this comment. It's needed to add service types names nicely.
 }

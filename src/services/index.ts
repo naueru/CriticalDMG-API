@@ -6,6 +6,8 @@ import sessionSubscriptions from "./sessionSubscriptions/sessionSubscriptions.se
 import campaigns from "./campaigns/campaigns.service";
 import characters from "./characters/characters.service";
 import campaignTemplates from "./campaignTemplates/campaignTemplates.service";
+import gameEngines from "./gameEngines/gameEngines.service";
+import assets from "./assets/assets.service";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application) {
@@ -16,5 +18,7 @@ export default function (app: Application) {
   app.configure(campaigns);
   app.configure(characters);
 app.configure(campaignTemplates);
+app.configure(gameEngines);
+app.configure(assets);
 // Don't remove this comment. It's needed to format configure service nicely.
 }
