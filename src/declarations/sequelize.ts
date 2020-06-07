@@ -10,6 +10,7 @@ import { AssetModel } from "../models/assets.model";
 import { EventModel } from "../models/events.model";
 import { EventTemplateModel } from "../models/eventTemplates.model";
 import { RollModel } from "../models/rolls.model";
+import { ChatMessageModel } from "../models/chatMessages.model";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 /**
@@ -28,6 +29,7 @@ export enum ModelName {
   EVENT = "event",
   EVENT_TEMPLATE = "event_template",
   ROLL = "roll",
+  CHAT_MESSAGE = "chat_message",
   // Don't remove this comment. It's needed to add model names nicely.
 }
 
@@ -47,6 +49,7 @@ export type Models = {
   [ModelName.EVENT]: ModelCtor<EventModel>;
   [ModelName.EVENT_TEMPLATE]: ModelCtor<EventTemplateModel>;
   [ModelName.ROLL]: ModelCtor<RollModel>;
+  [ModelName.CHAT_MESSAGE]: ModelCtor<ChatMessageModel>;
   // Don't remove this comment. It's needed to add models nicely.
 };
 

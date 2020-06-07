@@ -9,6 +9,8 @@ import { ModelName, SettingName, CriticalDMGModel, Application } from "../declar
 import { UserModel } from "./users.model";
 import { EventModel } from "./events.model";
 import { SessionLogModel } from "./sessionLogs.model";
+import { RollModel } from "./rolls.model";
+import { ChatMessageModel } from "./chatMessages.model";
 
 export class SessionModel extends CriticalDMGModel {
   public name!: string;
@@ -29,6 +31,8 @@ export class SessionModel extends CriticalDMGModel {
     players: Association<SessionModel, UserModel>;
     log: Association<SessionModel, SessionLogModel>;
     events: Association<SessionModel, EventModel>;
+    rolls: Association<SessionModel, RollModel>;
+    messages: Association<SessionModel, ChatMessageModel>;
   };
 
   public readonly createdAt!: Date;
@@ -68,6 +72,14 @@ export default function (app: Application): typeof SessionModel {
 
     this.hasMany(models[ModelName.EVENT], {
       as: "events",
+    });
+
+    this.hasMany(models[ModelName.ROLL], {
+      as: "rolls",
+    });
+
+    this.hasMany(models[ModelName.CHAT_MESSAGE], {
+      as: "messages",
     });
   };
 

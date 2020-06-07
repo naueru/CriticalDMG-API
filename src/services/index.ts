@@ -11,6 +11,7 @@ import assets from "./assets/assets.service";
 import events from "./events/events.service";
 import eventTemplates from "./eventTemplates/eventTemplates.service";
 import rolls from "./rolls/rolls.service";
+import chatMessages from "./chatMessages/chatMessages.service";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application) {
@@ -26,5 +27,6 @@ app.configure(assets);
 app.configure(events);
 app.configure(eventTemplates);
 app.configure(rolls);
+app.configure(chatMessages);
 // Don't remove this comment. It's needed to format configure service nicely.
 }

@@ -26,6 +26,8 @@ import { EventTemplateDTO } from "../services/eventTemplates/eventTemplates.dto"
 import { EventTemplateService } from "../services/eventTemplates/eventTemplates.class";
 import { RollDTO } from "../services/rolls/rolls.dto";
 import { RollService } from "../services/rolls/rolls.class";
+import { ChatMessageDTO } from "../services/chatMessages/chatMessages.dto";
+import { ChatMessageService } from "../services/chatMessages/chatMessages.class";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export enum SettingName {
@@ -52,6 +54,7 @@ export enum ServiceName {
   EVENTS = "events",
   EVENT_TEMPLATES = "eventTemplates",
   ROLLS = "rolls",
+  CHAT_MESSAGES = "chatMessages",
   // Don't remove this comment. It's needed to add service names names nicely.
 }
 
@@ -129,6 +132,8 @@ export interface ServiceTypes {
 [ServiceName.EVENT_TEMPLATES]: EventTemplateService & ServiceAddons<EventTemplateDTO>;
 
 [ServiceName.ROLLS]: RollService & ServiceAddons<RollDTO>;
+
+[ServiceName.CHAT_MESSAGES]: ChatMessageService & ServiceAddons<ChatMessageDTO>;
 
 // Don't remove this comment. It's needed to add service types names nicely.
 }
