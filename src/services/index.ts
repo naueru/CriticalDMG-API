@@ -9,6 +9,7 @@ import campaignTemplates from "./campaignTemplates/campaignTemplates.service";
 import gameEngines from "./gameEngines/gameEngines.service";
 import assets from "./assets/assets.service";
 import events from "./events/events.service";
+import eventTemplates from "./eventTemplates/eventTemplates.service";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default function (app: Application) {
@@ -22,5 +23,6 @@ app.configure(campaignTemplates);
 app.configure(gameEngines);
 app.configure(assets);
 app.configure(events);
+app.configure(eventTemplates);
 // Don't remove this comment. It's needed to format configure service nicely.
 }

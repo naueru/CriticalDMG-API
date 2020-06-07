@@ -22,6 +22,8 @@ import { AssetDTO } from "../services/assets/assets.dto";
 import { AssetService } from "../services/assets/assets.class";
 import { EventDTO } from "../services/events/events.dto";
 import { EventService } from "../services/events/events.class";
+import { EventTemplateDTO } from "../services/eventTemplates/eventTemplates.dto";
+import { EventTemplateService } from "../services/eventTemplates/eventTemplates.class";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export enum SettingName {
@@ -46,6 +48,7 @@ export enum ServiceName {
   GAME_ENGINES = "gameEngines",
   ASSETS = "assets",
   EVENTS = "events",
+  EVENT_TEMPLATES = "eventTemplates",
   // Don't remove this comment. It's needed to add service names names nicely.
 }
 
@@ -119,6 +122,8 @@ export interface ServiceTypes {
 [ServiceName.ASSETS]: AssetService & ServiceAddons<AssetDTO>;
 
 [ServiceName.EVENTS]: EventService & ServiceAddons<EventDTO>;
+
+[ServiceName.EVENT_TEMPLATES]: EventTemplateService & ServiceAddons<EventTemplateDTO>;
 
 // Don't remove this comment. It's needed to add service types names nicely.
 }
