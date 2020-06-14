@@ -10,10 +10,14 @@ const { authenticate } = feathersAuthentication.hooks;
 const { hashPassword, protect } = local.hooks;
 
 const handleCreationError: Hook<UserDTO> = (context) => {
-  const notUniqueError = context.error.errors.find((e: any) => e.validatorKey === "not_unique");
+  const notUniqueError = context.error.errors.find(
+    (e: any) => e.validatorKey === "not_unique"
+  );
   if (notUniqueError) {
     const isMailNotUnique = notUniqueError.path === "email";
-    const internalError = isMailNotUnique ? ERROR_CODE.MAIL_ALREADY_IN_USE : ERROR_CODE.USERNAME_ALREADY_IN_USE;
+    const internalError = isMailNotUnique
+      ? ERROR_CODE.MAIL_ALREADY_IN_USE
+      : ERROR_CODE.USERNAME_ALREADY_IN_USE;
     context.error.data.internalError = internalError;
   }
   return context;

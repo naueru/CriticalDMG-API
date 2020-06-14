@@ -5,6 +5,7 @@ import {
   HasOneGetAssociationMixin,
   HasManyAddAssociationMixin,
   HasManyGetAssociationsMixin,
+  BelongsToGetAssociationMixin,
 } from "sequelize";
 import {
   ModelName,
@@ -14,6 +15,8 @@ import {
 } from "../declarations";
 import { SessionModel } from "./sessions.model";
 import { UserModel } from "./users.model";
+import { CharacterModel } from "./characters.model";
+import { CampaignTemplateModel } from "./campaignTemplates.model";
 
 export class CampaignModel extends CriticalDMGModel {
   public name!: string;
@@ -24,19 +27,24 @@ export class CampaignModel extends CriticalDMGModel {
   public addSession!: HasManyAddAssociationMixin<SessionModel, number>;
   public setOwner!: HasOneSetAssociationMixin<UserModel, number>;
 
-  /** ADD Character model association (players)*/
+  public addPlayer!: HasManyAddAssociationMixin<CharacterModel, number>;
+  public getPlayers!: HasManyGetAssociationsMixin<CharacterModel>;
+
+  public addNpc!: HasManyAddAssociationMixin<CharacterModel, number>;
+  public getNpcs!: HasManyGetAssociationsMixin<CharacterModel>;
+
+  public getTemplate!: BelongsToGetAssociationMixin<CampaignTemplateModel>;
   /** ADD Event model association */
-  /** ADD CampaignTemplate model association */
-  /** ADD haracter model association npc */
 
   public static associations: {
     session: Association<CampaignModel, SessionModel>;
     owner: Association<CampaignModel, UserModel>;
+    npcs: Association<CampaignModel, CharacterModel>;
+    players: Association<CampaignModel, CharacterModel>;
+    template: Association<CampaignModel, CampaignTemplateModel>;
 
-    /** ADD Character model association (players)*/
     /** ADD Event model association */
     /** ADD CampaignTemplate model association */
-    /** ADD haracter model association npc */
   };
 
   public readonly createdAt!: Date;
@@ -68,13 +76,24 @@ export default function (app: Application): typeof CampaignModel {
     this.hasMany(models[ModelName.SESSION], {
       as: "sessions",
     });
+
     this.hasOne(models[ModelName.USER], {
       as: "owner",
     });
-    /** ADD Character model association (players)*/
+
+    // TODO should we merge these two?
+    this.hasMany(models[ModelName.CHARACTER], {
+      as: "players",
+    });
+    this.hasMany(models[ModelName.CHARACTER], {
+      as: "npcs",
+    });
+
+    this.belongsTo(models[ModelName.CAMPAIGN_TEMPLATE], {
+      as: "template",
+    });
+
     /** ADD Event model association */
-    /** ADD CampaignTemplate model association */
-    /** ADD haracter model association npc */
   };
 
   return CampaignModel;

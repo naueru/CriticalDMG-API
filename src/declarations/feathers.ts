@@ -12,6 +12,22 @@ import { SessionLogsService } from "../services/sessionLogs/sessionLogs.class";
 import { SessionSubscriptionsService } from "../services/sessionSubscriptions/sessionSubscriptions.class";
 import { CampaignDTO } from "../services/campaigns/campaigns.dto";
 import { CampaignService } from "../services/campaigns/campaigns.class";
+import { CharacterDTO } from "../services/characters/characters.dto";
+import { CharacterService } from "../services/characters/characters.class";
+import { CampaignTemplateDTO } from "../services/campaignTemplates/campaignTemplates.dto";
+import { CampaignTemplateService } from "../services/campaignTemplates/campaignTemplates.class";
+import { GameEngineDTO } from "../services/gameEngines/gameEngines.dto";
+import { GameEngineService } from "../services/gameEngines/gameEngines.class";
+import { AssetDTO } from "../services/assets/assets.dto";
+import { AssetService } from "../services/assets/assets.class";
+import { EventDTO } from "../services/events/events.dto";
+import { EventService } from "../services/events/events.class";
+import { EventTemplateDTO } from "../services/eventTemplates/eventTemplates.dto";
+import { EventTemplateService } from "../services/eventTemplates/eventTemplates.class";
+import { RollDTO } from "../services/rolls/rolls.dto";
+import { RollService } from "../services/rolls/rolls.class";
+import { ChatMessageDTO } from "../services/chatMessages/chatMessages.dto";
+import { ChatMessageService } from "../services/chatMessages/chatMessages.class";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export enum SettingName {
@@ -31,6 +47,14 @@ export enum ServiceName {
   SESSION_LOGS = "sessionLogs",
   SESSION_SUBSCRIPTIONS = "sessionSubscriptions",
   CAMPAIGNS = "campaigns",
+  CHARACTERS = "characters",
+  CAMPAIGN_TEMPLATES = "campaignTemplates",
+  GAME_ENGINES = "gameEngines",
+  ASSETS = "assets",
+  EVENTS = "events",
+  EVENT_TEMPLATES = "eventTemplates",
+  ROLLS = "rolls",
+  CHAT_MESSAGES = "chatMessages",
   // Don't remove this comment. It's needed to add service names names nicely.
 }
 
@@ -90,10 +114,30 @@ export interface ServiceTypes {
   [ServiceName.SESSION_SUBSCRIPTIONS]: SessionSubscriptionsService &
     ServiceAddons<any>;
 
-  [ServiceName.AUTHENTICATION]: AuthenticationService &
-    ServiceAddons<SessionLogDto>;
+  [ServiceName.AUTHENTICATION]: AuthenticationService & ServiceAddons<any>;
 
   [ServiceName.CAMPAIGNS]: CampaignService & ServiceAddons<CampaignDTO>;
+
+  [ServiceName.CHARACTERS]: CharacterService & ServiceAddons<CharacterDTO>;
+
+  [ServiceName.CHARACTERS]: CharacterService & ServiceAddons<CharacterDTO>;
+
+  [ServiceName.CAMPAIGN_TEMPLATES]: CampaignTemplateService &
+    ServiceAddons<CampaignTemplateDTO>;
+
+  [ServiceName.GAME_ENGINES]: GameEngineService & ServiceAddons<GameEngineDTO>;
+
+  [ServiceName.ASSETS]: AssetService & ServiceAddons<AssetDTO>;
+
+  [ServiceName.EVENTS]: EventService & ServiceAddons<EventDTO>;
+
+  [ServiceName.EVENT_TEMPLATES]: EventTemplateService &
+    ServiceAddons<EventTemplateDTO>;
+
+  [ServiceName.ROLLS]: RollService & ServiceAddons<RollDTO>;
+
+  [ServiceName.CHAT_MESSAGES]: ChatMessageService &
+    ServiceAddons<ChatMessageDTO>;
 
   // Don't remove this comment. It's needed to add service types names nicely.
 }

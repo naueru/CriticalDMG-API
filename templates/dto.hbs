@@ -1,9 +1,9 @@
 export interface {{properCase name}}DTO {
   id: number;
 {{#each properties}}
-  {{camelCase this.propertyName}}: {{lowerCase this.propertyType}}
+  {{camelCase this.propertyName}}: {{lowerCase this.propertyType}};
 {{/each}}
 
-  public createdAt: Date;
-  public updatedAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
