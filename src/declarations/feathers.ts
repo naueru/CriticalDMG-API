@@ -111,7 +111,8 @@ export interface ServiceTypes {
 
   [ServiceName.SESSION_LOGS]: SessionLogsService & ServiceAddons<SessionLogDto>;
 
-  [ServiceName.SESSION_SUBSCRIPTIONS]: SessionSubscriptionsService & ServiceAddons<any>;
+  [ServiceName.SESSION_SUBSCRIPTIONS]: SessionSubscriptionsService &
+    ServiceAddons<any>;
 
   [ServiceName.AUTHENTICATION]: AuthenticationService & ServiceAddons<any>;
 
@@ -121,21 +122,24 @@ export interface ServiceTypes {
 
   [ServiceName.CHARACTERS]: CharacterService & ServiceAddons<CharacterDTO>;
 
-  [ServiceName.CAMPAIGN_TEMPLATES]: CampaignTemplateService & ServiceAddons<CampaignTemplateDTO>;
+  [ServiceName.CAMPAIGN_TEMPLATES]: CampaignTemplateService &
+    ServiceAddons<CampaignTemplateDTO>;
 
-[ServiceName.GAME_ENGINES]: GameEngineService & ServiceAddons<GameEngineDTO>;
+  [ServiceName.GAME_ENGINES]: GameEngineService & ServiceAddons<GameEngineDTO>;
 
-[ServiceName.ASSETS]: AssetService & ServiceAddons<AssetDTO>;
+  [ServiceName.ASSETS]: AssetService & ServiceAddons<AssetDTO>;
 
-[ServiceName.EVENTS]: EventService & ServiceAddons<EventDTO>;
+  [ServiceName.EVENTS]: EventService & ServiceAddons<EventDTO>;
 
-[ServiceName.EVENT_TEMPLATES]: EventTemplateService & ServiceAddons<EventTemplateDTO>;
+  [ServiceName.EVENT_TEMPLATES]: EventTemplateService &
+    ServiceAddons<EventTemplateDTO>;
 
-[ServiceName.ROLLS]: RollService & ServiceAddons<RollDTO>;
+  [ServiceName.ROLLS]: RollService & ServiceAddons<RollDTO>;
 
-[ServiceName.CHAT_MESSAGES]: ChatMessageService & ServiceAddons<ChatMessageDTO>;
+  [ServiceName.CHAT_MESSAGES]: ChatMessageService &
+    ServiceAddons<ChatMessageDTO>;
 
-// Don't remove this comment. It's needed to add service types names nicely.
+  // Don't remove this comment. It's needed to add service types names nicely.
 }
 
 export type Pagination = void | { default: number; max: number };

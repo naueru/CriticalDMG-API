@@ -6,7 +6,12 @@ import {
   HasManyAddAssociationMixin,
   HasManyGetAssociationsMixin,
 } from "sequelize";
-import { ModelName, SettingName, CriticalDMGModel, Application } from "../declarations";
+import {
+  ModelName,
+  SettingName,
+  CriticalDMGModel,
+  Application,
+} from "../declarations";
 import { GameEngineModel } from "./gameEngines.model";
 import { AssetModel } from "./assets.model";
 
@@ -14,7 +19,10 @@ export class CampaignTemplateModel extends CriticalDMGModel {
   name!: string;
 
   public getGameEngine!: BelongsToGetAssociationMixin<GameEngineModel>;
-  public setGameEngine!: BelongsToSetAssociationMixin<CampaignTemplateModel, number>;
+  public setGameEngine!: BelongsToSetAssociationMixin<
+    CampaignTemplateModel,
+    number
+  >;
 
   public addAsset!: HasManyAddAssociationMixin<CampaignTemplateModel, number>;
   public getAsset!: HasManyGetAssociationsMixin<CampaignTemplateModel>;

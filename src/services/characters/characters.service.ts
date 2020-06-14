@@ -9,7 +9,7 @@ export default function (app: Application) {
     paginate: app.get(SettingName.PAGINATE),
   };
 
-  app.use(`/${ServiceName.CHARACTERS }`, new CharacterService(options, app));
+  app.use(`/${ServiceName.CHARACTERS}`, new CharacterService(options, app));
 
   const service = app.service(ServiceName.CHARACTERS);
 

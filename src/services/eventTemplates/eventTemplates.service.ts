@@ -9,7 +9,10 @@ export default function (app: Application) {
     paginate: app.get(SettingName.PAGINATE),
   };
 
-  app.use(`/${ServiceName.EVENT_TEMPLATES }`, new EventTemplateService(options, app));
+  app.use(
+    `/${ServiceName.EVENT_TEMPLATES}`,
+    new EventTemplateService(options, app)
+  );
 
   const service = app.service(ServiceName.EVENT_TEMPLATES);
 

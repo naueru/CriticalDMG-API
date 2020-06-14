@@ -9,7 +9,7 @@ export default function (app: Application) {
     paginate: app.get(SettingName.PAGINATE),
   };
 
-  app.use(`/${ServiceName.ROLLS }`, new RollService(options, app));
+  app.use(`/${ServiceName.ROLLS}`, new RollService(options, app));
 
   const service = app.service(ServiceName.ROLLS);
 

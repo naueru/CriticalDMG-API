@@ -9,7 +9,10 @@ export default function (app: Application) {
     paginate: app.get(SettingName.PAGINATE),
   };
 
-  app.use(`/${ServiceName.CHAT_MESSAGES }`, new ChatMessageService(options, app));
+  app.use(
+    `/${ServiceName.CHAT_MESSAGES}`,
+    new ChatMessageService(options, app)
+  );
 
   const service = app.service(ServiceName.CHAT_MESSAGES);
 

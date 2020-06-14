@@ -1,5 +1,14 @@
-import { DataTypes, BelongsToGetAssociationMixin, Association } from "sequelize";
-import { ModelName, SettingName, CriticalDMGModel, Application } from "../declarations";
+import {
+  DataTypes,
+  BelongsToGetAssociationMixin,
+  Association,
+} from "sequelize";
+import {
+  ModelName,
+  SettingName,
+  CriticalDMGModel,
+  Application,
+} from "../declarations";
 import { UserModel } from "./users.model";
 import { CampaignModel } from "./campaigns.model";
 import { RollModel } from "./rolls.model";

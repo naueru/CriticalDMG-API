@@ -9,7 +9,7 @@ export default function (app: Application) {
     paginate: app.get(SettingName.PAGINATE),
   };
 
-  app.use(`/${ServiceName.GAME_ENGINES }`, new GameEngineService(options, app));
+  app.use(`/${ServiceName.GAME_ENGINES}`, new GameEngineService(options, app));
 
   const service = app.service(ServiceName.GAME_ENGINES);
 

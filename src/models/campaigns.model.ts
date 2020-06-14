@@ -7,7 +7,12 @@ import {
   HasManyGetAssociationsMixin,
   BelongsToGetAssociationMixin,
 } from "sequelize";
-import { ModelName, SettingName, CriticalDMGModel, Application } from "../declarations";
+import {
+  ModelName,
+  SettingName,
+  CriticalDMGModel,
+  Application,
+} from "../declarations";
 import { SessionModel } from "./sessions.model";
 import { UserModel } from "./users.model";
 import { CharacterModel } from "./characters.model";

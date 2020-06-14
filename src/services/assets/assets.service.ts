@@ -9,7 +9,7 @@ export default function (app: Application) {
     paginate: app.get(SettingName.PAGINATE),
   };
 
-  app.use(`/${ServiceName.ASSETS }`, new AssetService(options, app));
+  app.use(`/${ServiceName.ASSETS}`, new AssetService(options, app));
 
   const service = app.service(ServiceName.ASSETS);
 

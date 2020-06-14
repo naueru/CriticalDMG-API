@@ -1,5 +1,10 @@
 import { DataTypes, Association } from "sequelize";
-import { ModelName, SettingName, CriticalDMGModel, Application } from "../declarations";
+import {
+  ModelName,
+  SettingName,
+  CriticalDMGModel,
+  Application,
+} from "../declarations";
 import { CharacterModel } from "./characters.model";
 
 export class RollModel extends CriticalDMGModel {

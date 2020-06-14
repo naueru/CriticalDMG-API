@@ -5,7 +5,12 @@ import {
   HasManyCreateAssociationMixin,
   HasManyAddAssociationMixin,
 } from "sequelize";
-import { ModelName, SettingName, CriticalDMGModel, Application } from "../declarations";
+import {
+  ModelName,
+  SettingName,
+  CriticalDMGModel,
+  Application,
+} from "../declarations";
 import { UserModel } from "./users.model";
 import { EventModel } from "./events.model";
 import { SessionLogModel } from "./sessionLogs.model";
