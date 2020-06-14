@@ -1,47 +1,26 @@
-
-import { DataTypes } from "sequelize";
+import { ModelName } from "../declarations";
 import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+  Model,
+  Column,
+  Table,
+} from "sequelize-typescript";
 
-export class {{properCase name}}Model extends CriticalDMGModel {
+@Table({
+  tableName: ModelName.{{constantCase name}},
+  modelName: ModelName.{{constantCase name}},
+  timestamps: true,
+})
+export class {{properCase name}}Model extends Model<{{properCase name}}> {
 {{#each properties}}
+  @Column
   {{camelCase this.propertyName}}!: {{this.propertyType}};
 {{/each}}
   
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+
+  @BeforeCount
+  static setToRaw(options: any) {
+    options.raw = true;
+  }
 }
 
-export default function (app: Application): typeof {{properCase name}}Model {
-  const sequelize = app.get(SettingName.SEQUELIZE);
-  {{properCase name}}Model.init(
-    {
-    {{#each properties}}
-      {{camelCase this.propertyName}}: {
-        type: DataTypes.{{ this.sequelizeType }},
-        allowNull: {{ this.propertyIsRequired}},
-      },
-    {{/each}}
-
-    },
-    {
-      sequelize,
-      tableName: ModelName.{{constantCase name}},
-      modelName: ModelName.{{constantCase name}},
-      hooks: {
-        beforeCount(options: any) {
-          options.raw = true;
-        },
-      },
-    }
-  );
-
-  {{properCase name}}Model.associate = function (models) {
-  };
-
-  return {{properCase name}}Model;
-}
+export default {{properCase name}}Model;

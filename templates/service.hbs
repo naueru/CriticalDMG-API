@@ -1,11 +1,11 @@
 import { Application, ServiceName, SettingName } from "../../declarations";
 import { {{properCase name}}Service } from "./{{camelCase pluralName}}.class";
-import createModel from "../../models/{{camelCase pluralName}}.model";
+import Model from "../../models/{{camelCase pluralName}}.model";
 import hooks from "./{{camelCase pluralName}}.hooks";
 
 export default function (app: Application) {
   const options = {
-    Model: createModel(app),
+    Model,
     paginate: app.get(SettingName.PAGINATE),
   };
 
