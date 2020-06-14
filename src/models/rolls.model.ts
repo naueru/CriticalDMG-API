@@ -1,49 +1,41 @@
-import { DataTypes, Association } from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+import { ModelName } from "../declarations";
 import { CharacterModel } from "./characters.model";
-
-export class RollModel extends CriticalDMGModel {
+import {
+  Model,
+  Column,
+  Table,
+  BelongsTo,
+  BeforeCount,
+  ForeignKey,
+} from "sequelize-typescript";
+import SessionModel from "./sessions.model";
+@Table({
+  tableName: ModelName.ROLL,
+  modelName: ModelName.ROLL,
+  timestamps: true,
+})
+export class RollModel extends Model<RollModel> {
+  @Column
   faces!: number;
 
-  static associations: {
-    characters: Association<RollModel, CharacterModel>;
-  };
+  @BelongsTo(() => CharacterModel)
+  character!: CharacterModel;
 
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  @ForeignKey(() => CharacterModel)
+  @Column
+  characterId!: number;
+
+  @BelongsTo(() => SessionModel)
+  session!: SessionModel;
+
+  @ForeignKey(() => SessionModel)
+  @Column
+  sessionId!: number;
+
+  @BeforeCount
+  static setToRaw(options: any) {
+    options.raw = true;
+  }
 }
 
-export default function (app: Application): typeof RollModel {
-  const sequelize = app.get(SettingName.SEQUELIZE);
-  RollModel.init(
-    {
-      faces: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      tableName: ModelName.ROLL,
-      modelName: ModelName.ROLL,
-      hooks: {
-        beforeCount(options: any) {
-          options.raw = true;
-        },
-      },
-    }
-  );
-
-  RollModel.associate = function (models) {
-    this.belongsTo(models[ModelName.CHARACTER], {
-      as: "character",
-    });
-  };
-
-  return RollModel;
-}
+export default RollModel;

@@ -1,11 +1,11 @@
 import { Application, ServiceName, SettingName } from "../../declarations";
 import { GameEngineService } from "./gameEngines.class";
-import createModel from "../../models/gameEngines.model";
+import Model from "../../models/gameEngines.model";
 import hooks from "./gameEngines.hooks";
 
 export default function (app: Application) {
   const options = {
-    Model: createModel(app),
+    Model,
     paginate: app.get(SettingName.PAGINATE),
   };
 

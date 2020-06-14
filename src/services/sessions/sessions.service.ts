@@ -1,11 +1,11 @@
 import { Application, ServiceName, SettingName } from "../../declarations";
 import { SessionService } from "./sessions.class";
-import createModel from "../../models/sessions.model";
+import Model from "../../models/sessions.model";
 import hooks from "./sessions.hooks";
 
 export default function (app: Application) {
   const options = {
-    Model: createModel(app),
+    Model,
     paginate: app.get(SettingName.PAGINATE),
   };
 

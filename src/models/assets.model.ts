@@ -1,47 +1,34 @@
-import { DataTypes, Association } from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+import { ModelName } from "../declarations";
 import { CampaignTemplateModel } from "./campaignTemplates.model";
+import {
+  Model,
+  Column,
+  Table,
+  BeforeCount,
+  BelongsTo,
+  ForeignKey,
+} from "sequelize-typescript";
 
-export class AssetModel extends CriticalDMGModel {
+@Table({
+  tableName: ModelName.ASSET,
+  modelName: ModelName.ASSET,
+  timestamps: true,
+})
+export class AssetModel extends Model<AssetModel> {
+  @Column
   url!: string;
 
-  static associations: {
-    template: Association<AssetModel, CampaignTemplateModel>;
-  };
+  @BelongsTo(() => CampaignTemplateModel)
+  template!: CampaignTemplateModel;
 
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  @ForeignKey(() => CampaignTemplateModel)
+  @Column
+  templateId!: number;
+
+  @BeforeCount
+  static setToRaw(options: any) {
+    options.raw = true;
+  }
 }
 
-export default function (app: Application): typeof AssetModel {
-  const sequelize = app.get(SettingName.SEQUELIZE);
-  AssetModel.init(
-    {
-      url: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      tableName: ModelName.ASSET,
-      modelName: ModelName.ASSET,
-      hooks: {
-        beforeCount(options: any) {
-          options.raw = true;
-        },
-      },
-    }
-  );
-
-  AssetModel.associate = function (models) {
-    this.belongsTo(models[ModelName.CAMPAIGN_TEMPLATE]);
-  };
-
-  return AssetModel;
-}
+export default AssetModel;

@@ -1,12 +1,12 @@
 // Initializes the `users` service on path `/users`
 import { Application, ServiceName, SettingName } from "../../declarations";
 import { UsersService } from "./users.class";
-import createModel from "../../models/users.model";
+import Model from "../../models/users.model";
 import hooks from "./users.hooks";
 
 export default function (app: Application) {
   const options = {
-    Model: createModel(app),
+    Model,
     paginate: app.get(SettingName.PAGINATE),
   };
 

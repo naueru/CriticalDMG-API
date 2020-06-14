@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "target": "es2018",
     "module": "commonjs",
     "outDir": "./lib",
@@ -7,7 +9,5 @@
     "strict": true,
     "esModuleInterop": true
   },
-  "exclude": [
-    "test"
-  ]
+  "exclude": ["test"]
 }

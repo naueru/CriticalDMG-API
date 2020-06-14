@@ -1,11 +1,11 @@
 import { Application, ServiceName, SettingName } from "../../declarations";
 import { AssetService } from "./assets.class";
-import createModel from "../../models/assets.model";
+import Model from "../../models/assets.model";
 import hooks from "./assets.hooks";
 
 export default function (app: Application) {
   const options = {
-    Model: createModel(app),
+    Model,
     paginate: app.get(SettingName.PAGINATE),
   };
 

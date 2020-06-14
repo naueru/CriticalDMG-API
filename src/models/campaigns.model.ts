@@ -1,100 +1,57 @@
-import {
-  DataTypes,
-  Association,
-  HasOneSetAssociationMixin,
-  HasOneGetAssociationMixin,
-  HasManyAddAssociationMixin,
-  HasManyGetAssociationsMixin,
-  BelongsToGetAssociationMixin,
-} from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+import { ModelName } from "../declarations";
 import { SessionModel } from "./sessions.model";
 import { UserModel } from "./users.model";
 import { CharacterModel } from "./characters.model";
 import { CampaignTemplateModel } from "./campaignTemplates.model";
+import {
+  Model,
+  Column,
+  Table,
+  BeforeCount,
+  BelongsTo,
+  HasMany,
+  ForeignKey,
+} from "sequelize-typescript";
 
-export class CampaignModel extends CriticalDMGModel {
+@Table({
+  tableName: ModelName.CAMPAIGN,
+  modelName: ModelName.CAMPAIGN,
+  timestamps: true,
+})
+export class CampaignModel extends Model<CampaignModel> {
+  @Column
   public name!: string;
 
-  public getOwner!: HasOneGetAssociationMixin<UserModel>;
-  public getSessions!: HasManyGetAssociationsMixin<SessionModel>;
+  @HasMany(() => SessionModel)
+  session!: SessionModel[];
 
-  public addSession!: HasManyAddAssociationMixin<SessionModel, number>;
-  public setOwner!: HasOneSetAssociationMixin<UserModel, number>;
+  // disable for now
+  /*
+  @HasMany(() => CharacterModel)
+  npcs!: CharacterModel[];
+  */
 
-  public addPlayer!: HasManyAddAssociationMixin<CharacterModel, number>;
-  public getPlayers!: HasManyGetAssociationsMixin<CharacterModel>;
+  @HasMany(() => CharacterModel)
+  players!: CharacterModel[];
 
-  public addNpc!: HasManyAddAssociationMixin<CharacterModel, number>;
-  public getNpcs!: HasManyGetAssociationsMixin<CharacterModel>;
+  @BelongsTo(() => UserModel)
+  owner!: UserModel;
 
-  public getTemplate!: BelongsToGetAssociationMixin<CampaignTemplateModel>;
-  /** ADD Event model association */
+  @ForeignKey(() => UserModel)
+  @Column
+  ownerId!: number;
 
-  public static associations: {
-    session: Association<CampaignModel, SessionModel>;
-    owner: Association<CampaignModel, UserModel>;
-    npcs: Association<CampaignModel, CharacterModel>;
-    players: Association<CampaignModel, CharacterModel>;
-    template: Association<CampaignModel, CampaignTemplateModel>;
+  @BelongsTo(() => CampaignTemplateModel)
+  template!: CampaignTemplateModel;
 
-    /** ADD Event model association */
-    /** ADD CampaignTemplate model association */
-  };
+  @ForeignKey(() => CampaignTemplateModel)
+  @Column
+  templateId!: number;
 
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  @BeforeCount
+  static setToRaw(options: any) {
+    options.raw = true;
+  }
 }
 
-export default function (app: Application): typeof CampaignModel {
-  const sequelize = app.get(SettingName.SEQUELIZE);
-  CampaignModel.init(
-    {
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      tableName: ModelName.CAMPAIGN,
-      modelName: ModelName.CAMPAIGN,
-      hooks: {
-        beforeCount(options: any) {
-          options.raw = true;
-        },
-      },
-    }
-  );
-
-  CampaignModel.associate = function (models) {
-    this.hasMany(models[ModelName.SESSION], {
-      as: "sessions",
-    });
-
-    this.hasOne(models[ModelName.USER], {
-      as: "owner",
-    });
-
-    // TODO should we merge these two?
-    this.hasMany(models[ModelName.CHARACTER], {
-      as: "players",
-    });
-    this.hasMany(models[ModelName.CHARACTER], {
-      as: "npcs",
-    });
-
-    this.belongsTo(models[ModelName.CAMPAIGN_TEMPLATE], {
-      as: "template",
-    });
-
-    /** ADD Event model association */
-  };
-
-  return CampaignModel;
-}
+export default CampaignModel;

@@ -1,11 +1,11 @@
 import { Application, ServiceName, SettingName } from "../../declarations";
 import { ChatMessageService } from "./chatMessages.class";
-import createModel from "../../models/chatMessages.model";
+import Model from "../../models/chatMessages.model";
 import hooks from "./chatMessages.hooks";
 
 export default function (app: Application) {
   const options = {
-    Model: createModel(app),
+    Model,
     paginate: app.get(SettingName.PAGINATE),
   };
 

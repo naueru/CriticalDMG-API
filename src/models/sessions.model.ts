@@ -1,92 +1,51 @@
+import { ModelName } from "../declarations";
 import {
-  DataTypes,
-  Association,
-  HasManyGetAssociationsMixin,
-  HasManyCreateAssociationMixin,
-  HasManyAddAssociationMixin,
-} from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
-import { UserModel } from "./users.model";
+  Table,
+  Column,
+  Model,
+  HasMany,
+  BelongsTo,
+  BeforeCount,
+  ForeignKey,
+} from "sequelize-typescript";
 import { EventModel } from "./events.model";
 import { SessionLogModel } from "./sessionLogs.model";
 import { RollModel } from "./rolls.model";
 import { ChatMessageModel } from "./chatMessages.model";
+import { CampaignModel } from "./campaigns.model";
 
-export class SessionModel extends CriticalDMGModel {
-  public name!: string;
+@Table({
+  tableName: ModelName.SESSION,
+  modelName: ModelName.SESSION,
+  timestamps: true,
+})
+export class SessionModel extends Model<SessionModel> {
+  @Column
+  name!: string;
 
-  public readonly players!: UserModel[];
-  public readonly log!: SessionLogModel[];
+  @HasMany(() => SessionLogModel)
+  log!: SessionLogModel[];
 
-  public getPlayers!: HasManyGetAssociationsMixin<UserModel>;
-  public getLog!: HasManyGetAssociationsMixin<SessionLogModel>;
+  @HasMany(() => EventModel)
+  events!: EventModel[];
 
-  public addPlayer!: HasManyAddAssociationMixin<UserModel, number>;
-  public createLog!: HasManyCreateAssociationMixin<SessionLogModel>;
+  @HasMany(() => RollModel)
+  rolls!: EventModel[];
 
-  public addEvent!: HasManyAddAssociationMixin<EventModel, number>;
-  public createEvent!: HasManyCreateAssociationMixin<EventModel>;
+  @HasMany(() => ChatMessageModel)
+  messages!: EventModel[];
 
-  public static associations: {
-    players: Association<SessionModel, UserModel>;
-    log: Association<SessionModel, SessionLogModel>;
-    events: Association<SessionModel, EventModel>;
-    rolls: Association<SessionModel, RollModel>;
-    messages: Association<SessionModel, ChatMessageModel>;
-  };
+  @BelongsTo(() => CampaignModel)
+  campaign!: EventModel[];
 
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  @ForeignKey(() => CampaignModel)
+  @Column
+  campaignId!: number;
+
+  @BeforeCount
+  static setToRaw(options: any) {
+    options.raw = true;
+  }
 }
 
-export default function (app: Application): typeof SessionModel {
-  const sequelize = app.get(SettingName.SEQUELIZE);
-  SessionModel.init(
-    {
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      tableName: ModelName.SESSION,
-      modelName: ModelName.SESSION,
-      hooks: {
-        beforeCount(options: any) {
-          options.raw = true;
-        },
-      },
-    }
-  );
-
-  SessionModel.associate = function (models) {
-    this.belongsToMany(models[ModelName.USER], {
-      through: ModelName.SESSION_SUBSCRIPTION,
-      as: "players",
-    });
-
-    this.hasMany(models[ModelName.SESSION_LOG], {
-      as: "log",
-    });
-
-    this.hasMany(models[ModelName.EVENT], {
-      as: "events",
-    });
-
-    this.hasMany(models[ModelName.ROLL], {
-      as: "rolls",
-    });
-
-    this.hasMany(models[ModelName.CHAT_MESSAGE], {
-      as: "messages",
-    });
-  };
-
-  return SessionModel;
-}
+export default SessionModel;

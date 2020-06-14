@@ -1,68 +1,51 @@
-import {
-  DataTypes,
-  BelongsToGetAssociationMixin,
-  Association,
-} from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+import { ModelName } from "../declarations";
 import { UserModel } from "./users.model";
 import { CampaignModel } from "./campaigns.model";
 import { RollModel } from "./rolls.model";
 import { ChatMessageModel } from "./chatMessages.model";
+import {
+  Model,
+  Column,
+  Table,
+  BeforeCount,
+  BelongsTo,
+  HasMany,
+  ForeignKey,
+} from "sequelize-typescript";
 
-export class CharacterModel extends CriticalDMGModel {
+@Table({
+  tableName: ModelName.CHARACTER,
+  modelName: ModelName.CHARACTER,
+  timestamps: true,
+})
+export class CharacterModel extends Model<CharacterModel> {
+  @Column
   name!: string;
 
-  public getUser!: BelongsToGetAssociationMixin<UserModel>;
+  @HasMany(() => RollModel)
+  rolls!: RollModel[];
 
-  public static associations: {
-    user: Association<CharacterModel, UserModel>;
-    campaign: Association<CharacterModel, CampaignModel>;
-    rolls: Association<CharacterModel, RollModel>;
-    chatMessages: Association<CharacterModel, ChatMessageModel>;
-  };
+  @HasMany(() => ChatMessageModel)
+  chatMessages!: ChatMessageModel[];
 
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  @BelongsTo(() => UserModel)
+  user!: UserModel;
+
+  @ForeignKey(() => UserModel)
+  @Column
+  userId!: number;
+
+  @BelongsTo(() => CampaignModel)
+  campaign!: CampaignModel;
+
+  @ForeignKey(() => CampaignModel)
+  @Column
+  campaignId!: number;
+
+  @BeforeCount
+  static setToRaw(options: any) {
+    options.raw = true;
+  }
 }
 
-export default function (app: Application): typeof CharacterModel {
-  const sequelize = app.get(SettingName.SEQUELIZE);
-  CharacterModel.init(
-    {
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      tableName: ModelName.CHARACTER,
-      modelName: ModelName.CHARACTER,
-      hooks: {
-        beforeCount(options: any) {
-          options.raw = true;
-        },
-      },
-    }
-  );
-
-  CharacterModel.associate = function (models) {
-    this.belongsTo(models[ModelName.CAMPAIGN], {
-      as: "campaign",
-    });
-
-    this.belongsTo(models[ModelName.USER], {
-      as: "user",
-    });
-
-    this.hasMany(models[ModelName.ROLL]);
-    this.hasMany(models[ModelName.CHAT_MESSAGE]);
-  };
-
-  return CharacterModel;
-}
+export default CharacterModel;

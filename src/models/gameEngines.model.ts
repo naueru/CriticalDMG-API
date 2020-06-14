@@ -1,47 +1,29 @@
-import { DataTypes, Association } from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+import { ModelName } from "../declarations";
 import { CampaignTemplateModel } from "./campaignTemplates.model";
+import {
+  Model,
+  Column,
+  Table,
+  BeforeCount,
+  HasMany,
+} from "sequelize-typescript";
 
-export class GameEngineModel extends CriticalDMGModel {
+@Table({
+  tableName: ModelName.GAME_ENGINE,
+  modelName: ModelName.GAME_ENGINE,
+  timestamps: true,
+})
+export class GameEngineModel extends Model<GameEngineModel> {
+  @Column
   name!: string;
 
-  public static associations: {
-    templates: Association<GameEngineModel, CampaignTemplateModel>;
-  };
+  @HasMany(() => CampaignTemplateModel)
+  templates!: CampaignTemplateModel[];
 
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  @BeforeCount
+  static setToRaw(options: any) {
+    options.raw = true;
+  }
 }
 
-export default function (app: Application): typeof GameEngineModel {
-  const sequelize = app.get(SettingName.SEQUELIZE);
-  GameEngineModel.init(
-    {
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      tableName: ModelName.GAME_ENGINE,
-      modelName: ModelName.GAME_ENGINE,
-      hooks: {
-        beforeCount(options: any) {
-          options.raw = true;
-        },
-      },
-    }
-  );
-
-  GameEngineModel.associate = function (models) {
-    this.hasMany(models[ModelName.CAMPAIGN_TEMPLATE]);
-  };
-
-  return GameEngineModel;
-}
+export default GameEngineModel;
