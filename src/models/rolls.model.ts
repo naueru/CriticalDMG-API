@@ -1,13 +1,6 @@
 import { ModelName } from "../declarations";
 import { CharacterModel } from "./characters.model";
-import {
-  Model,
-  Column,
-  Table,
-  BelongsTo,
-  BeforeCount,
-  ForeignKey,
-} from "sequelize-typescript";
+import { Model, Column, Table, BelongsTo, ForeignKey } from "sequelize-typescript";
 import SessionModel from "./sessions.model";
 @Table({
   tableName: ModelName.ROLL,
@@ -31,11 +24,6 @@ export class RollModel extends Model<RollModel> {
   @ForeignKey(() => SessionModel)
   @Column
   sessionId!: number;
-
-  @BeforeCount
-  static setToRaw(options: any) {
-    options.raw = true;
-  }
 }
 
 export default RollModel;

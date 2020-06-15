@@ -3,13 +3,13 @@ import { GameEngineService } from "./gameEngines.class";
 import Model from "../../models/gameEngines.model";
 import hooks from "./gameEngines.hooks";
 
-export default function (app: Application) {
+export default function (app: Application): void {
   const options = {
     Model,
     paginate: app.get(SettingName.PAGINATE),
   };
 
-  app.use(`/${ServiceName.GAME_ENGINES}`, new GameEngineService(options, app));
+  app.use(`/${ServiceName.GAME_ENGINES}`, new GameEngineService(options));
 
   const service = app.service(ServiceName.GAME_ENGINES);
 

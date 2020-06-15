@@ -9,5 +9,6 @@
     "strict": true,
     "esModuleInterop": true
   },
-  "exclude": ["test"]
+  "exclude": ["test"],
+  "include": ["./src", "./config", ".eslintrc.js", "jest.config.js"]
 }

@@ -4,14 +4,15 @@ import { UsersService } from "./users.class";
 import Model from "../../models/users.model";
 import hooks from "./users.hooks";
 
-export default function (app: Application) {
+export default function (app: Application): void {
   const options = {
     Model,
     paginate: app.get(SettingName.PAGINATE),
   };
+  app.get(SettingName.PAGINATE);
 
   // Initialize our service with any options it requires
-  app.use(`/${ServiceName.USERS}`, new UsersService(options, app));
+  app.use(`/${ServiceName.USERS}`, new UsersService(options));
 
   // Get our initialized service so that we can register hooks
   const service = app.service(ServiceName.USERS);

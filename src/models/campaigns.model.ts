@@ -3,15 +3,7 @@ import { SessionModel } from "./sessions.model";
 import { UserModel } from "./users.model";
 import { CharacterModel } from "./characters.model";
 import { CampaignTemplateModel } from "./campaignTemplates.model";
-import {
-  Model,
-  Column,
-  Table,
-  BeforeCount,
-  BelongsTo,
-  HasMany,
-  ForeignKey,
-} from "sequelize-typescript";
+import { Model, Column, Table, BelongsTo, HasMany, ForeignKey } from "sequelize-typescript";
 
 @Table({
   tableName: ModelName.CAMPAIGN,
@@ -47,11 +39,6 @@ export class CampaignModel extends Model<CampaignModel> {
   @ForeignKey(() => CampaignTemplateModel)
   @Column
   templateId!: number;
-
-  @BeforeCount
-  static setToRaw(options: any) {
-    options.raw = true;
-  }
 }
 
 export default CampaignModel;

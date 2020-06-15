@@ -1,14 +1,7 @@
 import { ModelName } from "../declarations";
 import { SessionModel } from "./sessions.model";
 import { EventTemplateModel } from "./eventTemplates.model";
-import {
-  Model,
-  Column,
-  Table,
-  BeforeCount,
-  BelongsTo,
-  ForeignKey,
-} from "sequelize-typescript";
+import { Model, Column, Table, BelongsTo, ForeignKey } from "sequelize-typescript";
 
 @Table({
   tableName: ModelName.EVENT,
@@ -33,11 +26,6 @@ export class EventModel extends Model<EventModel> {
   @ForeignKey(() => EventTemplateModel)
   @Column
   templateId!: number;
-
-  @BeforeCount
-  static setToRaw(options: any) {
-    options.raw = true;
-  }
 }
 
 export default EventModel;

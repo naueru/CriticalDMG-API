@@ -1,12 +1,6 @@
 import { ModelName } from "../declarations";
 import { CampaignTemplateModel } from "./campaignTemplates.model";
-import {
-  Model,
-  Column,
-  Table,
-  BeforeCount,
-  HasMany,
-} from "sequelize-typescript";
+import { Model, Column, Table, HasMany } from "sequelize-typescript";
 
 @Table({
   tableName: ModelName.GAME_ENGINE,
@@ -19,11 +13,6 @@ export class GameEngineModel extends Model<GameEngineModel> {
 
   @HasMany(() => CampaignTemplateModel)
   templates!: CampaignTemplateModel[];
-
-  @BeforeCount
-  static setToRaw(options: any) {
-    options.raw = true;
-  }
 }
 
 export default GameEngineModel;

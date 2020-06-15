@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   host: "localhost",
   port: process.env.PORT || "8080",
 
@@ -11,3 +11,5 @@ module.exports = {
     DIALECT: "postgres",
   },
 };
+
+export default config;

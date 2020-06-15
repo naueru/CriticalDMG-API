@@ -19,10 +19,8 @@ const mustBeBySocket: Hook<SessionSubscriptionDto> = (context) => {
 };
 
 const joinSessionChannel: Hook<SessionSubscriptionDto> = (context) => {
-  if (context.params.connection) {
-    context.app
-      .channel(`session/${context.data?.sessionId}`)
-      .join(context.params.connection);
+  if (context.params.connection && context.data?.sessionId) {
+    context.app.channel(`session/${context.data?.sessionId}`).join(context.params.connection);
   }
 };
 
