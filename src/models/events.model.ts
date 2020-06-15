@@ -1,54 +1,43 @@
-import { DataTypes, Association } from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+import { ModelName } from "../declarations";
 import { SessionModel } from "./sessions.model";
 import { EventTemplateModel } from "./eventTemplates.model";
+import {
+  Model,
+  Column,
+  Table,
+  BeforeCount,
+  BelongsTo,
+  ForeignKey,
+} from "sequelize-typescript";
 
-export class EventModel extends CriticalDMGModel {
-  command!: string;
+@Table({
+  tableName: ModelName.EVENT,
+  modelName: ModelName.EVENT,
+  timestamps: true,
+})
+export class EventModel extends Model<EventModel> {
+  //TODO rename
+  @Column
+  name!: string;
 
-  public static associations: {
-    session: Association<EventModel, SessionModel>;
-    template: Association<EventModel, EventTemplateModel>;
-  };
+  @BelongsTo(() => SessionModel)
+  session!: SessionModel;
 
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  @ForeignKey(() => SessionModel)
+  @Column
+  sessionId!: number;
+
+  @BelongsTo(() => EventTemplateModel)
+  template!: EventTemplateModel;
+
+  @ForeignKey(() => EventTemplateModel)
+  @Column
+  templateId!: number;
+
+  @BeforeCount
+  static setToRaw(options: any) {
+    options.raw = true;
+  }
 }
 
-export default function (app: Application): typeof EventModel {
-  const sequelize = app.get(SettingName.SEQUELIZE);
-  EventModel.init(
-    {
-      command: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      tableName: ModelName.EVENT,
-      modelName: ModelName.EVENT,
-      hooks: {
-        beforeCount(options: any) {
-          options.raw = true;
-        },
-      },
-    }
-  );
-
-  EventModel.associate = function (models) {
-    this.belongsTo(models[ModelName.SESSION], {
-      as: "session",
-    });
-    this.belongsTo(models[ModelName.EVENT_TEMPLATE], {
-      as: "template",
-    });
-  };
-
-  return EventModel;
-}
+export default EventModel;

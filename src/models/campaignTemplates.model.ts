@@ -1,67 +1,44 @@
-import {
-  DataTypes,
-  Association,
-  BelongsToGetAssociationMixin,
-  BelongsToSetAssociationMixin,
-  HasManyAddAssociationMixin,
-  HasManyGetAssociationsMixin,
-} from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+import { ModelName } from "../declarations";
 import { GameEngineModel } from "./gameEngines.model";
 import { AssetModel } from "./assets.model";
 
-export class CampaignTemplateModel extends CriticalDMGModel {
+import { CampaignModel } from "./campaigns.model";
+import {
+  Model,
+  Column,
+  Table,
+  BeforeCount,
+  BelongsTo,
+  HasMany,
+  ForeignKey,
+} from "sequelize-typescript";
+
+@Table({
+  tableName: ModelName.CAMPAIGN_TEMPLATE,
+  modelName: ModelName.CAMPAIGN_TEMPLATE,
+  timestamps: true,
+})
+export class CampaignTemplateModel extends Model<CampaignTemplateModel> {
+  @Column
   name!: string;
 
-  public getGameEngine!: BelongsToGetAssociationMixin<GameEngineModel>;
-  public setGameEngine!: BelongsToSetAssociationMixin<
-    CampaignTemplateModel,
-    number
-  >;
+  @HasMany(() => CampaignModel)
+  capaigns!: CampaignModel[];
 
-  public addAsset!: HasManyAddAssociationMixin<CampaignTemplateModel, number>;
-  public getAsset!: HasManyGetAssociationsMixin<CampaignTemplateModel>;
+  @HasMany(() => AssetModel)
+  assets!: AssetModel[];
 
-  static associations: {
-    gameEngine: Association<CampaignTemplateModel, GameEngineModel>;
-    assets: Association<CampaignTemplateModel, AssetModel>;
-  };
+  @BelongsTo(() => GameEngineModel)
+  gameEngine!: GameEngineModel;
 
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  @ForeignKey(() => GameEngineModel)
+  @Column
+  gameEngineId!: number;
+
+  @BeforeCount
+  static setToRaw(options: any) {
+    options.raw = true;
+  }
 }
 
-export default function (app: Application): typeof CampaignTemplateModel {
-  const sequelize = app.get(SettingName.SEQUELIZE);
-  CampaignTemplateModel.init(
-    {
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      tableName: ModelName.CAMPAIGN_TEMPLATE,
-      modelName: ModelName.CAMPAIGN_TEMPLATE,
-      hooks: {
-        beforeCount(options: any) {
-          options.raw = true;
-        },
-      },
-    }
-  );
-
-  CampaignTemplateModel.associate = function (models) {
-    this.hasMany(models[ModelName.CAMPAIGN]);
-    this.belongsTo(models[ModelName.GAME_ENGINE]);
-    this.hasMany(models[ModelName.ASSET]);
-  };
-
-  return CampaignTemplateModel;
-}
+export default CampaignTemplateModel;

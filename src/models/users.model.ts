@@ -1,82 +1,44 @@
-import { DataTypes, Association, HasManyAddAssociationMixin } from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-} from "../declarations";
+import { ModelName } from "../declarations";
 import { CharacterModel } from "./characters.model";
+import {
+  Table,
+  Column,
+  Model,
+  HasMany,
+  BeforeCount,
+} from "sequelize-typescript";
 
-export class UserModel extends CriticalDMGModel {
+@Table({
+  tableName: ModelName.USER,
+  modelName: ModelName.USER,
+  timestamps: true,
+})
+export class UserModel extends Model<UserModel> {
+  @Column
   public email!: string;
+
+  @Column
   public userName!: string;
+
+  @Column
   public alterEgo!: string;
+
+  @Column
   public picture!: string;
+
+  @Column
   public icon!: string;
 
-  public addCharacter!: HasManyAddAssociationMixin<CharacterModel, number>;
-
-  public static associations: {
-    characters: Association<UserModel, CharacterModel>;
-  };
-
+  @Column
   public password!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+
+  @HasMany(() => CharacterModel)
+  characters!: CharacterModel[];
+
+  @BeforeCount
+  static setToRaw(options: any) {
+    options.raw = true;
+  }
 }
 
-export default function (app: Application): typeof UserModel {
-  const sequelize = app.get(SettingName.SEQUELIZE);
-  UserModel.init(
-    {
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      userName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      alterEgo: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      picture: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      icon: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      tableName: ModelName.USER,
-      modelName: ModelName.USER,
-      hooks: {
-        beforeCount(options: any) {
-          options.raw = true;
-        },
-      },
-    }
-  );
-
-  UserModel.associate = function (models) {
-    this.belongsToMany(models[ModelName.SESSION], {
-      through: ModelName.SESSION_SUBSCRIPTION,
-    });
-
-    this.hasMany(models[ModelName.SESSION], {
-      as: "characters",
-    });
-  };
-
-  return UserModel;
-}
+export default UserModel;

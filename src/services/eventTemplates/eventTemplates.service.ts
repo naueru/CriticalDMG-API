@@ -1,11 +1,11 @@
 import { Application, ServiceName, SettingName } from "../../declarations";
 import { EventTemplateService } from "./eventTemplates.class";
-import createModel from "../../models/eventTemplates.model";
+import Model from "../../models/eventTemplates.model";
 import hooks from "./eventTemplates.hooks";
 
 export default function (app: Application) {
   const options = {
-    Model: createModel(app),
+    Model,
     paginate: app.get(SettingName.PAGINATE),
   };
 

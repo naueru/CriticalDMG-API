@@ -1,57 +1,36 @@
-import { DataTypes, Association } from "sequelize";
-import {
-  ModelName,
-  SettingName,
-  CriticalDMGModel,
-  Application,
-  LogType,
-  LogTypeEnum,
-  LogContent,
-} from "../declarations";
+import { ModelName } from "../declarations";
 import { SessionModel } from "./sessions.model";
+import {
+  BelongsTo,
+  Column,
+  Table,
+  Model,
+  BeforeCount,
+  ForeignKey,
+} from "sequelize-typescript";
+@Table({
+  tableName: ModelName.SESSION_LOG,
+  modelName: ModelName.SESSION_LOG,
+  timestamps: true,
+})
+export class SessionLogModel extends Model<SessionLogModel> {
+  @Column
+  type!: string;
 
-export class SessionLogModel extends CriticalDMGModel {
-  public type!: LogType;
-  public content!: LogContent;
+  @Column
+  content!: string;
 
-  public static associations: {
-    session: Association<SessionLogModel, SessionModel>;
-  };
+  @BelongsTo(() => SessionModel)
+  session!: SessionModel;
 
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  @ForeignKey(() => SessionModel)
+  @Column
+  sessionId!: number;
+
+  @BeforeCount
+  static setToRaw(options: any) {
+    options.raw = true;
+  }
 }
 
-export default function (app: Application): typeof SessionLogModel {
-  const sequelize = app.get(SettingName.SEQUELIZE);
-  SessionLogModel.init(
-    {
-      type: {
-        type: DataTypes.ENUM(LogTypeEnum.MESSAGE, LogTypeEnum.EVENT),
-        allowNull: false,
-      },
-
-      content: {
-        type: DataTypes.JSON,
-      },
-    },
-    {
-      sequelize,
-      tableName: ModelName.SESSION_LOG,
-      modelName: ModelName.SESSION_LOG,
-      hooks: {
-        beforeCount(options: any) {
-          options.raw = true;
-        },
-      },
-    }
-  );
-
-  SessionLogModel.associate = function (models) {
-    this.belongsTo(models[ModelName.SESSION], {
-      as: "session",
-    });
-  };
-
-  return SessionLogModel;
-}
+export default SessionLogModel;

@@ -19,7 +19,8 @@ export class SessionService extends Service<SessionDTO> {
       returnModelInstance
     )) as unknown) as SessionModel;
 
-    session.addPlayer(userId);
+    // TODO uncomment this
+    // session.addPlayer(userId);
     return session.save();
   }
 }
