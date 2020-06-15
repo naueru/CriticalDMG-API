@@ -1,6 +1,6 @@
 import { ModelName } from "../declarations";
 import { CharacterModel } from "./characters.model";
-import { Table, Column, Model, HasMany } from "sequelize-typescript";
+import { Table, Column, Model, HasMany, Unique } from "sequelize-typescript";
 
 @Table({
   tableName: ModelName.USER,
@@ -8,9 +8,11 @@ import { Table, Column, Model, HasMany } from "sequelize-typescript";
   timestamps: true,
 })
 export class UserModel extends Model<UserModel> {
+  @Unique
   @Column
   public email!: string;
 
+  @Unique
   @Column
   public userName!: string;
 
