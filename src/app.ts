@@ -11,7 +11,6 @@ import socketio from "@feathersjs/socketio";
 
 import { Application, SettingName } from "./declarations";
 import logger from "./logger";
-// import middleware from "./middleware";
 import services from "./services";
 import appHooks from "./app.hooks";
 import channels from "./channels";
