@@ -3,15 +3,7 @@ import { GameEngineModel } from "./gameEngines.model";
 import { AssetModel } from "./assets.model";
 
 import { CampaignModel } from "./campaigns.model";
-import {
-  Model,
-  Column,
-  Table,
-  BeforeCount,
-  BelongsTo,
-  HasMany,
-  ForeignKey,
-} from "sequelize-typescript";
+import { Model, Column, Table, BelongsTo, HasMany, ForeignKey } from "sequelize-typescript";
 
 @Table({
   tableName: ModelName.CAMPAIGN_TEMPLATE,
@@ -34,11 +26,6 @@ export class CampaignTemplateModel extends Model<CampaignTemplateModel> {
   @ForeignKey(() => GameEngineModel)
   @Column
   gameEngineId!: number;
-
-  @BeforeCount
-  static setToRaw(options: any) {
-    options.raw = true;
-  }
 }
 
 export default CampaignTemplateModel;

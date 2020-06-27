@@ -1,12 +1,6 @@
 import { ModelName } from "../declarations";
 import { CharacterModel } from "./characters.model";
-import {
-  Table,
-  Column,
-  Model,
-  HasMany,
-  BeforeCount,
-} from "sequelize-typescript";
+import { Table, Column, Model, HasMany, Unique } from "sequelize-typescript";
 
 @Table({
   tableName: ModelName.USER,
@@ -14,9 +8,11 @@ import {
   timestamps: true,
 })
 export class UserModel extends Model<UserModel> {
+  @Unique
   @Column
   public email!: string;
 
+  @Unique
   @Column
   public userName!: string;
 
@@ -34,11 +30,6 @@ export class UserModel extends Model<UserModel> {
 
   @HasMany(() => CharacterModel)
   characters!: CharacterModel[];
-
-  @BeforeCount
-  static setToRaw(options: any) {
-    options.raw = true;
-  }
 }
 
 export default UserModel;

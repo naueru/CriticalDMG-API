@@ -1,13 +1,6 @@
 import { ModelName } from "../declarations";
 import { SessionModel } from "./sessions.model";
-import {
-  BelongsTo,
-  Column,
-  Table,
-  Model,
-  BeforeCount,
-  ForeignKey,
-} from "sequelize-typescript";
+import { BelongsTo, Column, Table, Model, ForeignKey } from "sequelize-typescript";
 @Table({
   tableName: ModelName.SESSION_LOG,
   modelName: ModelName.SESSION_LOG,
@@ -26,11 +19,6 @@ export class SessionLogModel extends Model<SessionLogModel> {
   @ForeignKey(() => SessionModel)
   @Column
   sessionId!: number;
-
-  @BeforeCount
-  static setToRaw(options: any) {
-    options.raw = true;
-  }
 }
 
 export default SessionLogModel;

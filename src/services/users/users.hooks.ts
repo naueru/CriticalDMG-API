@@ -3,22 +3,24 @@ import * as local from "@feathersjs/authentication-local";
 import { UserDTO } from "./users.dto";
 import { Hook } from "@feathersjs/feathers";
 import { ERROR_CODE } from "../../declarations/constants";
-const { FeathersError } = require("@feathersjs/errors");
+import { HookContext, ValidationErrorItem } from "../../declarations";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
 const { hashPassword, protect } = local.hooks;
 
-const handleCreationError: Hook<UserDTO> = (context) => {
-  const notUniqueError = context.error.errors.find(
-    (e: any) => e.validatorKey === "not_unique"
-  );
-  if (notUniqueError) {
-    const isMailNotUnique = notUniqueError.path === "email";
-    const internalError = isMailNotUnique
-      ? ERROR_CODE.MAIL_ALREADY_IN_USE
-      : ERROR_CODE.USERNAME_ALREADY_IN_USE;
-    context.error.data.internalError = internalError;
+const handleCreationError: Hook<UserDTO> = (context: HookContext) => {
+  if (context.error) {
+    const notUniqueError = context.error.errors.find(
+      (e: unknown) => e && (e as ValidationErrorItem).validatorKey === "not_unique",
+    ) as ValidationErrorItem;
+    if (notUniqueError) {
+      const isMailNotUnique = notUniqueError.path === "email";
+      const internalError = isMailNotUnique
+        ? ERROR_CODE.MAIL_ALREADY_IN_USE
+        : ERROR_CODE.USERNAME_ALREADY_IN_USE;
+      context.error.data.internalError = internalError;
+    }
   }
   return context;
 };

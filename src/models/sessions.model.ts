@@ -1,13 +1,5 @@
 import { ModelName } from "../declarations";
-import {
-  Table,
-  Column,
-  Model,
-  HasMany,
-  BelongsTo,
-  BeforeCount,
-  ForeignKey,
-} from "sequelize-typescript";
+import { Table, Column, Model, HasMany, BelongsTo, ForeignKey } from "sequelize-typescript";
 import { EventModel } from "./events.model";
 import { SessionLogModel } from "./sessionLogs.model";
 import { RollModel } from "./rolls.model";
@@ -41,11 +33,6 @@ export class SessionModel extends Model<SessionModel> {
   @ForeignKey(() => CampaignModel)
   @Column
   campaignId!: number;
-
-  @BeforeCount
-  static setToRaw(options: any) {
-    options.raw = true;
-  }
 }
 
 export default SessionModel;

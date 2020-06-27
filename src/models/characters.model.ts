@@ -3,15 +3,7 @@ import { UserModel } from "./users.model";
 import { CampaignModel } from "./campaigns.model";
 import { RollModel } from "./rolls.model";
 import { ChatMessageModel } from "./chatMessages.model";
-import {
-  Model,
-  Column,
-  Table,
-  BeforeCount,
-  BelongsTo,
-  HasMany,
-  ForeignKey,
-} from "sequelize-typescript";
+import { Model, Column, Table, BelongsTo, HasMany, ForeignKey } from "sequelize-typescript";
 
 @Table({
   tableName: ModelName.CHARACTER,
@@ -41,11 +33,6 @@ export class CharacterModel extends Model<CharacterModel> {
   @ForeignKey(() => CampaignModel)
   @Column
   campaignId!: number;
-
-  @BeforeCount
-  static setToRaw(options: any) {
-    options.raw = true;
-  }
 }
 
 export default CharacterModel;

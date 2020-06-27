@@ -1,4 +1,4 @@
-import { Model, Sequelize } from "sequelize";
+import { Sequelize, ModelCtor } from "sequelize-typescript";
 import { UserModel } from "../models/users.model";
 import { SessionModel } from "../models/sessions.model";
 import { SessionLogModel } from "../models/sessionLogs.model";
@@ -54,13 +54,6 @@ export type Models = {
 };
 
 /**
- * Custom Model to add static method associate used to add references to other models
- */
-export abstract class CriticalDMGModel<T = any, T2 = any> extends Model<T, T2> {
-  static associate?: (models: Models) => void;
-}
-
-/**
  * Custom Sequelize for sequelize intance to have our Model implementation
  */
 export class CriticalDMGSequelize extends Sequelize {
@@ -69,7 +62,3 @@ export class CriticalDMGSequelize extends Sequelize {
    */
   readonly models!: Models;
 }
-
-export type ModelType = typeof CriticalDMGModel;
-
-export type ModelCtor<M extends CriticalDMGModel> = { new (): M } & ModelType;

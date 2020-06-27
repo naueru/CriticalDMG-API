@@ -1,14 +1,7 @@
 import { ModelName } from "../declarations";
 import { SessionModel } from "./sessions.model";
 import { CharacterModel } from "./characters.model";
-import {
-  Model,
-  Column,
-  Table,
-  BeforeCount,
-  BelongsTo,
-  ForeignKey,
-} from "sequelize-typescript";
+import { Model, Column, Table, BelongsTo, ForeignKey } from "sequelize-typescript";
 
 @Table({
   tableName: ModelName.CHAT_MESSAGE,
@@ -32,11 +25,6 @@ export class ChatMessageModel extends Model<ChatMessageModel> {
   @ForeignKey(() => SessionModel)
   @Column
   sessionId!: number;
-
-  @BeforeCount
-  static setToRaw(options: any) {
-    options.raw = true;
-  }
 }
 
 export default ChatMessageModel;

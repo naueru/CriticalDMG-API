@@ -1,5 +1,5 @@
 import { CriticalDMGSequelize } from "./sequelize";
-import { ServiceAddons } from "@feathersjs/feathers";
+import { ServiceAddons, HookContext as FeathersHookContext } from "@feathersjs/feathers";
 import { Application as ExpressFeathers } from "@feathersjs/express";
 import { UsersService } from "../services/users/users.class";
 import { AuthenticationService } from "@feathersjs/authentication/lib";
@@ -28,6 +28,10 @@ import { RollDTO } from "../services/rolls/rolls.dto";
 import { RollService } from "../services/rolls/rolls.class";
 import { ChatMessageDTO } from "../services/chatMessages/chatMessages.dto";
 import { ChatMessageService } from "../services/chatMessages/chatMessages.class";
+import { SessionSubscriptionDto } from "../services/sessionSubscriptions/sessionSubscriptions.dto";
+import { AuthenticationDto } from "../authentication";
+import { ValidationErrorItem as SequelizeValidationErrorItem } from "sequelize";
+import { Sequelize } from "sequelize-typescript";
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export enum SettingName {
@@ -71,7 +75,7 @@ export interface SettingTypes {
   /**
    * Sequelize instance wrapper with specific Critical DMG logic
    */
-  [SettingName.SEQUELIZE]: CriticalDMGSequelize;
+  [SettingName.SEQUELIZE]: Sequelize;
 
   /**
    * Postgres configuration data
@@ -105,16 +109,16 @@ export interface SettingTypes {
 }
 
 export interface ServiceTypes {
-  [ServiceName.USERS]: UsersService & ServiceAddons<any>;
+  [ServiceName.USERS]: UsersService & ServiceAddons<UserDTO>;
 
   [ServiceName.SESSIONS]: SessionService & ServiceAddons<SessionDTO>;
 
   [ServiceName.SESSION_LOGS]: SessionLogsService & ServiceAddons<SessionLogDto>;
 
   [ServiceName.SESSION_SUBSCRIPTIONS]: SessionSubscriptionsService &
-    ServiceAddons<any>;
+    ServiceAddons<SessionSubscriptionDto>;
 
-  [ServiceName.AUTHENTICATION]: AuthenticationService & ServiceAddons<any>;
+  [ServiceName.AUTHENTICATION]: AuthenticationService & ServiceAddons<AuthenticationDto>;
 
   [ServiceName.CAMPAIGNS]: CampaignService & ServiceAddons<CampaignDTO>;
 
@@ -122,8 +126,7 @@ export interface ServiceTypes {
 
   [ServiceName.CHARACTERS]: CharacterService & ServiceAddons<CharacterDTO>;
 
-  [ServiceName.CAMPAIGN_TEMPLATES]: CampaignTemplateService &
-    ServiceAddons<CampaignTemplateDTO>;
+  [ServiceName.CAMPAIGN_TEMPLATES]: CampaignTemplateService & ServiceAddons<CampaignTemplateDTO>;
 
   [ServiceName.GAME_ENGINES]: GameEngineService & ServiceAddons<GameEngineDTO>;
 
@@ -131,13 +134,11 @@ export interface ServiceTypes {
 
   [ServiceName.EVENTS]: EventService & ServiceAddons<EventDTO>;
 
-  [ServiceName.EVENT_TEMPLATES]: EventTemplateService &
-    ServiceAddons<EventTemplateDTO>;
+  [ServiceName.EVENT_TEMPLATES]: EventTemplateService & ServiceAddons<EventTemplateDTO>;
 
   [ServiceName.ROLLS]: RollService & ServiceAddons<RollDTO>;
 
-  [ServiceName.CHAT_MESSAGES]: ChatMessageService &
-    ServiceAddons<ChatMessageDTO>;
+  [ServiceName.CHAT_MESSAGES]: ChatMessageService & ServiceAddons<ChatMessageDTO>;
 
   // Don't remove this comment. It's needed to add service types names nicely.
 }
@@ -145,16 +146,34 @@ export interface ServiceTypes {
 export type Pagination = void | { default: number; max: number };
 
 declare module "@feathersjs/feathers" {
-  export interface Application<ServiceTypes = {}> {
-    get<T extends keyof SettingTypes>(name: T): SettingTypes[T];
-
-    set<T extends keyof SettingTypes>(name: T, value: SettingTypes[T]): this;
-  }
-
   export interface Params {
     user?: UserDTO;
     connection?: RealTimeConnection;
   }
 }
 
-export type Application = ExpressFeathers<ServiceTypes>;
+export class ValidationErrorItem extends SequelizeValidationErrorItem {
+  validatorKey?: string;
+  validatorName?: string;
+  validatorArgs?: [string];
+}
+export interface HookError {
+  name?: string;
+  message?: string;
+  code?: number;
+  className?: string;
+  data: Record<string, unknown>;
+  errors: [ValidationErrorItem | unknown];
+}
+export interface HookContext extends FeathersHookContext {
+  error?: HookError;
+}
+
+interface CriticalDMGApplication<SettingTypes> {
+  get<T extends keyof SettingTypes>(name: T): SettingTypes[T];
+
+  set<T extends keyof SettingTypes>(name: T, value: SettingTypes[T]): this;
+}
+
+export type Application = Omit<ExpressFeathers<ServiceTypes>, "get" | "set"> &
+  CriticalDMGApplication<SettingTypes>;

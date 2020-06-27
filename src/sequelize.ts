@@ -1,8 +1,8 @@
-import { Application, CriticalDMGSequelize, SettingName } from "./declarations";
+import { Application, SettingName } from "./declarations";
 
 import { Sequelize } from "sequelize-typescript";
 
-export default function (app: Application) {
+export default function (app: Application): void {
   const DATABASE_CONFIGURATION = app.get(SettingName.DATABASE_CONFIGURATION);
   const sequelize = new Sequelize({
     database: DATABASE_CONFIGURATION.NAME,

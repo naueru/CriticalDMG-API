@@ -1,23 +1,19 @@
 import { Service, SequelizeServiceOptions } from "feathers-sequelize";
-import { Application } from "../../declarations";
 import { SessionModel } from "../../models/sessions.model";
 import { SessionDTO } from "./sessions.dto";
 
 export class SessionService extends Service<SessionDTO> {
   Model!: SessionModel;
 
-  constructor(options: Partial<SequelizeServiceOptions>, app: Application) {
+  constructor(options: Partial<SequelizeServiceOptions>) {
     super(options);
   }
 
-  public async addPlayerToSession(sessionId: number, userId: number) {
+  public async addPlayerToSession(sessionId: number, userId: number): Promise<SessionModel> {
     const returnModelInstance = {
       sequelize: { raw: false },
     };
-    const session = ((await this.get(
-      sessionId,
-      returnModelInstance
-    )) as unknown) as SessionModel;
+    const session = ((await this.get(sessionId, returnModelInstance)) as unknown) as SessionModel;
 
     // TODO uncomment this
     // session.addPlayer(userId);

@@ -14,19 +14,19 @@ import rolls from "./rolls/rolls.service";
 import chatMessages from "./chatMessages/chatMessages.service";
 // Don't remove this comment. It's needed to format import lines nicely.
 
-export default function (app: Application) {
+export default function (app: Application): void {
   app.configure(users);
   app.configure(sessions);
   app.configure(sessionLogs);
   app.configure(sessionSubscriptions);
   app.configure(campaigns);
   app.configure(characters);
-app.configure(campaignTemplates);
-app.configure(gameEngines);
-app.configure(assets);
-app.configure(events);
-app.configure(eventTemplates);
-app.configure(rolls);
-app.configure(chatMessages);
-// Don't remove this comment. It's needed to format configure service nicely.
+  app.configure(campaignTemplates);
+  app.configure(gameEngines);
+  app.configure(assets);
+  app.configure(events);
+  app.configure(eventTemplates);
+  app.configure(rolls);
+  app.configure(chatMessages);
+  // Don't remove this comment. It's needed to format configure service nicely.
 }

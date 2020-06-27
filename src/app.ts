@@ -11,7 +11,6 @@ import socketio from "@feathersjs/socketio";
 
 import { Application, SettingName } from "./declarations";
 import logger from "./logger";
-import middleware from "./middleware";
 import services from "./services";
 import appHooks from "./app.hooks";
 import channels from "./channels";
@@ -29,9 +28,11 @@ app.use(cors());
 app.use(compress());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(favicon(path.join(app.get(SettingName.PUBLIC_PATH), "favicon.ico")));
+app.use(
+  favicon(path.join(app.get<SettingName.PUBLIC_PATH>(SettingName.PUBLIC_PATH), "favicon.ico")),
+);
 // Host the public folder
-app.use("/", express.static(app.get(SettingName.PUBLIC_PATH)));
+app.use("/", express.static(app.get<SettingName.PUBLIC_PATH>(SettingName.PUBLIC_PATH)));
 
 // Set up Plugins and providers
 app.configure(express.rest());
@@ -39,8 +40,8 @@ app.configure(socketio());
 
 app.configure(sequelize);
 
-// Configure other middleware (see `middleware/index.js`)
-app.configure(middleware);
+// Configure other middleware (see `middleware/index.js`) - not any middleware for now
+// app.configure(middleware);
 app.configure(authentication);
 // Set up our services (see `services/index.js`)
 app.configure(services);
