@@ -20,8 +20,18 @@ This project uses [Feathers](http://feathersjs.com). An open source web framewor
 3. [Configure PostgreSQL.](https://www.postgresql.org/docs/12/runtime.html)
    **For local development:**
 
+   - Log in as the Postgres user 
+   ```bash
+    sudo -i -u postgres
+    ```
    - [Create an user](https://www.postgresql.org/docs/12/app-createuser.html) with username _"critical-dmg"_ and password _"critical-dmg"_
+   ```bash
+    createuser critical-dmg -P
+    ```
    - [Create a database](https://www.postgresql.org/docs/12/app-createdb.html) called _"critical-dmg"_ and set as owner the user created
+   ```bash
+    createdb critical-dmg -O critical-dmg
+    ```
 
 4. Start your app
 
