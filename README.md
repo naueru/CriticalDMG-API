@@ -24,13 +24,13 @@ This project uses [Feathers](http://feathersjs.com). An open source web framewor
    ```bash
     sudo -i -u postgres
     ```
-   - [Create an user](https://www.postgresql.org/docs/12/app-createuser.html) with username _"critical-dmg"_ and password _"critical-dmg"_
+   - [Create an user](https://www.postgresql.org/docs/12/app-createuser.html) with username _"critical_dmg"_ and password _"critical_dmg"_
    ```bash
-    createuser critical-dmg -P
+    createuser critical_dmg -P
     ```
-   - [Create a database](https://www.postgresql.org/docs/12/app-createdb.html) called _"critical-dmg"_ and set as owner the user created
+   - [Create a database](https://www.postgresql.org/docs/12/app-createdb.html) called _"critical_dmg"_ and set as owner the user created
    ```bash
-    createdb critical-dmg -O critical-dmg
+    createdb critical_dmg -O critical_dmg
     ```
 
 4. Start your app
