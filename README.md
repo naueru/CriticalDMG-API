@@ -36,7 +36,7 @@ This project uses [Feathers](http://feathersjs.com). An open source web framewor
 4. Start your app
 
    ```bash
-   npm dev
+   npm run dev
    ```
 
 ## Testing
