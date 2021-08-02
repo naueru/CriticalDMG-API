@@ -15,6 +15,9 @@ export default function (app: Application): void {
     define: {
       freezeTableName: true,
     },
+    dialectOptions: {
+      ssl: true,
+    },
     models: [`${__dirname}/models`],
   });
 
